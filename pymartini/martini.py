@@ -135,27 +135,36 @@ class Tile:
             mx = (ax + bx) >> 1
             my = (ay + by) >> 1
 
-            if (abs(ax - cx) + abs(ay - cy) > 1) and (errors[my * size + mx] > max_error):
+            if (abs(ax - cx) + abs(ay - cy) > 1) and (errors[my * size + mx] >
+                                                      max_error):
                 countElements(cx, cy, ax, ay, mx, my)
                 countElements(bx, by, cx, cy, mx, my)
             else:
-                indices[ay * size + ax] = indices[ay * size + ax] or ++num_vertices
-                indices[by * size + bx] = indices[by * size + bx] or ++num_vertices
-                indices[cy * size + cx] = indices[cy * size + cx] or ++num_vertices
-                num_triangles++
+                if not indices[ay * size + ax]:
+                    num_vertices += 1
+                    indices[ay * size + ax] = num_vertices
+                if not indices[by * size + bx]:
+                    num_vertices += 1
+                    indices[by * size + bx] = num_vertices
+                if not indices[cy * size + cx]:
+                    num_vertices += 1
+                    indices[cy * size + cx] = num_vertices
+
+                num_triangles += 1
 
         countElements(0, 0, _max, _max, _max, 0)
         countElements(_max, _max, 0, 0, 0, _max)
 
         vertices = np.zeros(num_vertices * 2, dtype=np.uint16)
         triangles = np.zeros(num_triangles * 3, dtype=np.uint32)
-        triIndex = 0
+        tri_index = 0
 
         def processTriangle(ax, ay, bx, by, cx, cy):
             mx = (ax + bx) >> 1
             my = (ay + by) >> 1
 
-            if (abs(ax - cx) + abs(ay - cy) > 1) and (errors[my * size + mx] > max_error):
+            if (abs(ax - cx) + abs(ay - cy) > 1) and (errors[my * size + mx] >
+                                                      max_error):
                 # triangle doesn't approximate the surface well enough; drill down further
                 processTriangle(cx, cy, ax, ay, mx, my)
                 processTriangle(bx, by, cx, cy, mx, my)
@@ -175,9 +184,12 @@ class Tile:
                 vertices[2 * c] = cx
                 vertices[2 * c + 1] = cy
 
-                triangles[triIndex++] = a
-                triangles[triIndex++] = b
-                triangles[triIndex++] = c
+                triangles[tri_index] = a
+                tri_index += 1
+                triangles[tri_index] = b
+                tri_index += 1
+                triangles[tri_index] = c
+                tri_index += 1
 
         processTriangle(0, 0, _max, _max, _max, 0)
         processTriangle(_max, _max, 0, 0, 0, _max)
