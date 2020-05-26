@@ -111,3 +111,75 @@ class Tile:
                 errors[middle_index] = max(
                     errors[middle_index], errors[left_child_index],
                     errors[right_child_index])
+
+    def get_mesh(self, max_error=0):
+        size = self.martini.grid_size
+        indices = self.martini.indices
+        errors = self.errors
+
+        num_vertices = 0
+        num_triangles = 0
+        # max is a reserved keyword in Python
+        _max = size - 1
+
+        # use an index grid to keep track of vertices that were already used to
+        # avoid duplication
+        # I already initialized array with zeros
+        # indices.fill(0)
+
+        # retrieve mesh in two stages that both traverse the error map:
+        # - countElements: find used vertices (and assign each an index), and count triangles (for minimum allocation)
+        # - processTriangle: fill the allocated vertices & triangles typed arrays
+
+        def countElements(ax, ay, bx, by, cx, cy):
+            mx = (ax + bx) >> 1
+            my = (ay + by) >> 1
+
+            if (abs(ax - cx) + abs(ay - cy) > 1) and (errors[my * size + mx] > max_error):
+                countElements(cx, cy, ax, ay, mx, my)
+                countElements(bx, by, cx, cy, mx, my)
+            else:
+                indices[ay * size + ax] = indices[ay * size + ax] or ++num_vertices
+                indices[by * size + bx] = indices[by * size + bx] or ++num_vertices
+                indices[cy * size + cx] = indices[cy * size + cx] or ++num_vertices
+                num_triangles++
+
+        countElements(0, 0, _max, _max, _max, 0)
+        countElements(_max, _max, 0, 0, 0, _max)
+
+        vertices = np.zeros(num_vertices * 2, dtype=np.uint16)
+        triangles = np.zeros(num_triangles * 3, dtype=np.uint32)
+        triIndex = 0
+
+        def processTriangle(ax, ay, bx, by, cx, cy):
+            mx = (ax + bx) >> 1
+            my = (ay + by) >> 1
+
+            if (abs(ax - cx) + abs(ay - cy) > 1) and (errors[my * size + mx] > max_error):
+                # triangle doesn't approximate the surface well enough; drill down further
+                processTriangle(cx, cy, ax, ay, mx, my)
+                processTriangle(bx, by, cx, cy, mx, my)
+
+            else:
+                # add a triangle
+                a = indices[ay * size + ax] - 1
+                b = indices[by * size + bx] - 1
+                c = indices[cy * size + cx] - 1
+
+                vertices[2 * a] = ax
+                vertices[2 * a + 1] = ay
+
+                vertices[2 * b] = bx
+                vertices[2 * b + 1] = by
+
+                vertices[2 * c] = cx
+                vertices[2 * c + 1] = cy
+
+                triangles[triIndex++] = a
+                triangles[triIndex++] = b
+                triangles[triIndex++] = c
+
+        processTriangle(0, 0, _max, _max, _max, 0)
+        processTriangle(_max, _max, 0, 0, 0, _max)
+
+        return vertices, triangles
