@@ -3,6 +3,25 @@
 A (WIP, currently failing tests) Python port of [Martini][martini] for fast mesh
 generation
 
+## Install
+
+```
+pip install pymartini
+```
+
+## Example
+
+```py
+# set up mesh generator for a certain 2^k+1 grid size
+martini = Martini(257)
+
+# generate RTIN hierarchy from terrain data (an array of size^2 length)
+tile = martini.create_tile(terrain)
+
+# get a mesh (vertices and triangles indices) for a 10m error
+mesh = tile.get_mesh(10)
+```
+
 ## License
 
 This library is ported from Mapbox's [Martini][martini], which is licensed under

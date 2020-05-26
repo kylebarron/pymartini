@@ -8,7 +8,7 @@ def test_generate_mesh():
     terrain = mapbox_terrain_to_grid(fuji)
 
     martini = Martini(fuji.shape[0] + 1)
-    tile = martini.createTile(terrain)
+    tile = martini.create_tile(terrain)
     mesh = tile.get_mesh(500)
 
     exp_vertices = [

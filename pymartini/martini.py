@@ -56,7 +56,7 @@ class Martini:
             self.coords[k + 2] = bx
             self.coords[k + 3] = by
 
-    def createTile(self, terrain):
+    def create_tile(self, terrain):
         return Tile(terrain, self)
 
 
