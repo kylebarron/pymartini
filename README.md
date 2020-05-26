@@ -1,7 +1,7 @@
 # pymartini
 
-A (WIP, currently failing tests) Python port of [Martini][martini] for fast mesh
-generation
+A (WIP, currently failing tests) Python port of [Martini][martini] for fast
+terrain mesh generation
 
 ## Install
 
