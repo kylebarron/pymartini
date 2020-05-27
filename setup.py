@@ -1,8 +1,9 @@
 """Setup for pymartini."""
 from pathlib import Path
 
-from Cython.Build import cythonize
+# setuptools must be before Cython
 from setuptools import find_packages, setup
+from Cython.Build import cythonize
 
 with open("README.md") as f:
     readme = f.read()
@@ -16,7 +17,7 @@ extra_reqs = {
 
 # Ref https://suzyahyah.github.io/cython/programming/2018/12/01/Gotchas-in-Cython.html
 def find_pyx(path='.'):
-    return list(Path(path).glob('**/*.pyx'))
+    return list(map(str, Path(path).glob('**/*.pyx')))
 
 
 setup(
