@@ -1,15 +1,19 @@
+from pathlib import Path
+
 import numpy as np
 from imageio import imread
 
+from pymartini import Martini, mapbox_terrain_to_grid
+
 
 def test_generate_mesh():
-    path = '/Users/kyle/github/mapping/pymartini/test/fuji.png'
+    path = Path(__file__) / 'fuji.png'
     fuji = imread(path)
     terrain = mapbox_terrain_to_grid(fuji)
 
     martini = Martini(fuji.shape[0] + 1)
     tile = martini.create_tile(terrain)
-    mesh = tile.get_mesh(500)
+    vertices, triangles = tile.get_mesh(500)
 
     exp_vertices = [
         320, 64, 256, 128, 320, 128, 384, 128, 256, 0, 288, 160, 256, 192, 288, 192, 320, 192, 304, 176, 256, 256, 288,
@@ -17,7 +21,7 @@ def test_generate_mesh():
         256, 384, 256, 320, 320, 320, 256, 512, 512, 512, 128, 448, 192, 384, 192, 128, 384, 256, 512, 256, 384, 0,
         512, 128, 256, 64, 192, 0, 256, 64, 128, 32, 96, 0, 128, 32, 64, 16, 48, 0, 64, 0, 32
     ]
-    assert np.array_equal(np.asarray(exp_vertices, dtype=np.uint16), mesh[0])
+    assert np.array_equal(np.asarray(exp_vertices, dtype=np.uint16), vertices)
 
     exp_indices = [
         0, 1, 2, 3, 0, 2, 4, 1, 0, 5, 6, 7, 7, 8, 9, 5, 7, 9, 1, 6, 5, 6, 10, 11, 11, 8, 7, 6, 11, 7, 12, 2, 13, 8, 12,
@@ -29,4 +33,4 @@ def test_generate_mesh():
         21, 43, 44, 42, 43, 18, 21, 42, 21, 20, 45, 45, 44, 43, 21, 45, 43, 44, 41, 40, 40, 18, 42, 44, 40, 42, 41, 38,
         37, 37, 16, 39, 41, 37, 39, 38, 35, 32, 32, 10, 36, 38, 32, 36
     ]
-    assert np.array_equal(np.asarray(exp_indices, dtype=np.uint32), mesh[1])
+    assert np.array_equal(np.asarray(exp_indices, dtype=np.uint32), triangles)
