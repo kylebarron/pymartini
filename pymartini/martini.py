@@ -1,7 +1,7 @@
 import numpy as np
 
 from ._martini_cy import martini as _martini
-from ._martini_cy import tile_update
+from ._martini_cy import tile_update, countElements
 
 
 class Martini:
@@ -55,35 +55,10 @@ class Tile:
         # - countElements: find used vertices (and assign each an index), and count triangles (for minimum allocation)
         # - processTriangle: fill the allocated vertices & triangles typed arrays
 
-        def countElements(ax, ay, bx, by, cx, cy, num_vertices, num_triangles):
-            mx = (ax + bx) >> 1
-            my = (ay + by) >> 1
-
-            if (abs(ax - cx) + abs(ay - cy) > 1) and (errors[my * size + mx] >
-                                                      max_error):
-                num_vertices, num_triangles = countElements(
-                    cx, cy, ax, ay, mx, my, num_vertices, num_triangles)
-                num_vertices, num_triangles = countElements(
-                    bx, by, cx, cy, mx, my, num_vertices, num_triangles)
-            else:
-                if not indices[ay * size + ax]:
-                    num_vertices += 1
-                    indices[ay * size + ax] = num_vertices
-                if not indices[by * size + bx]:
-                    num_vertices += 1
-                    indices[by * size + bx] = num_vertices
-                if not indices[cy * size + cx]:
-                    num_vertices += 1
-                    indices[cy * size + cx] = num_vertices
-
-                num_triangles += 1
-
-            return num_vertices, num_triangles
-
-        num_vertices, num_triangles = countElements(
-            0, 0, _max, _max, _max, 0, num_vertices, num_triangles)
-        num_vertices, num_triangles = countElements(
-            _max, _max, 0, 0, 0, _max, num_vertices, num_triangles)
+        num_vertices, num_triangles, errors, indices = countElements(
+            0, 0, _max, _max, _max, 0, num_vertices, num_triangles, errors, indices, max_error, size)
+        num_vertices, num_triangles, errors, indices = countElements(
+            _max, _max, 0, 0, 0, _max, num_vertices, num_triangles, errors, indices, max_error, size)
 
         vertices = np.zeros(num_vertices * 2, dtype=np.uint16)
         triangles = np.zeros(num_triangles * 3, dtype=np.uint32)

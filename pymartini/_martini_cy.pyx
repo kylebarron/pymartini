@@ -108,3 +108,46 @@ def tile_update(
                 errors_view[right_child_index])
 
     return errors
+
+
+def countElements(
+    unsigned short ax,
+    unsigned short ay,
+    unsigned short bx,
+    unsigned short by,
+    unsigned short cx,
+    unsigned short cy,
+    unsigned int num_vertices,
+    unsigned int num_triangles,
+    np.ndarray[np.float32_t, ndim=1] errors,
+    np.ndarray[np.uint32_t, ndim=1] indices,
+    float max_error,
+    unsigned int size):
+
+    cdef unsigned short mx, my
+    cdef float [:] errors_view = errors
+    cdef unsigned int [:] indices_view = indices
+
+    mx = (ax + bx) >> 1
+    my = (ay + by) >> 1
+
+    if (abs(ax - cx) + abs(ay - cy) > 1) and (errors_view[my * size + mx] >
+                                              max_error):
+        num_vertices, num_triangles, errors, indices = countElements(
+            cx, cy, ax, ay, mx, my, num_vertices, num_triangles, errors, indices, max_error, size)
+        num_vertices, num_triangles, errors, indices = countElements(
+            bx, by, cx, cy, mx, my, num_vertices, num_triangles, errors, indices, max_error, size)
+    else:
+        if not indices_view[ay * size + ax]:
+            num_vertices += 1
+            indices_view[ay * size + ax] = num_vertices
+        if not indices_view[by * size + bx]:
+            num_vertices += 1
+            indices_view[by * size + bx] = num_vertices
+        if not indices_view[cy * size + cx]:
+            num_vertices += 1
+            indices_view[cy * size + cx] = num_vertices
+
+        num_triangles += 1
+
+    return num_vertices, num_triangles, errors, indices
