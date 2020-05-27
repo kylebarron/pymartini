@@ -1,6 +1,7 @@
 """Setup for pymartini."""
 from pathlib import Path
 
+import numpy as np
 # setuptools must be before Cython
 from setuptools import find_packages, setup
 from Cython.Build import cythonize
@@ -45,4 +46,6 @@ setup(
     install_requires=inst_reqs,
     extras_require=extra_reqs,
     ext_modules=cythonize(find_pyx(), language_level=3),
+    # Include Numpy headers
+    include_dirs=[np.get_include()],
 )
