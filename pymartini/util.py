@@ -9,9 +9,9 @@ def mapbox_terrain_to_grid(png):
     # decode terrain values
     for y in range(tile_size):
         for x in range(tile_size):
-            r = png[x, y, 0]
-            g = png[x, y, 1]
-            b = png[x, y, 2]
+            r = png[y, x, 0]
+            g = png[y, x, 1]
+            b = png[y, x, 2]
             terrain[y * tile_size +
                     x] = (r * 256 * 256 + g * 256.0 + b) / 10.0 - 10000.0
 
