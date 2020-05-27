@@ -14,7 +14,7 @@ class Martini:
         self.num_parent_triangles = self.num_triangles - tile_size * tile_size
 
         self.indices = np.zeros(
-            self.grid_size * self.grid_size, dtype=np.uint32)
+            (self.grid_size, self.grid_size), dtype=np.uint32)
 
         # coordinates for all possible triangles in an RTIN tile
         self.coords = np.zeros(self.num_triangles * 4, dtype=np.uint16)
@@ -142,15 +142,15 @@ class Tile:
                 num_vertices, num_triangles = countElements(
                     bx, by, cx, cy, mx, my, num_vertices, num_triangles)
             else:
-                if not indices[ay * size + ax]:
+                if not indices[ay, ax]:
                     num_vertices += 1
-                    indices[ay * size + ax] = num_vertices
-                if not indices[by * size + bx]:
+                    indices[ay, ax] = num_vertices
+                if not indices[by, bx]:
                     num_vertices += 1
-                    indices[by * size + bx] = num_vertices
-                if not indices[cy * size + cx]:
+                    indices[by, bx] = num_vertices
+                if not indices[cy, cx]:
                     num_vertices += 1
-                    indices[cy * size + cx] = num_vertices
+                    indices[cy, cx] = num_vertices
 
                 num_triangles += 1
 
@@ -177,9 +177,9 @@ class Tile:
 
             else:
                 # add a triangle
-                a = indices[ay * size + ax] - 1
-                b = indices[by * size + bx] - 1
-                c = indices[cy * size + cx] - 1
+                a = indices[ay, ax] - 1
+                b = indices[by, bx] - 1
+                c = indices[cy, cx] - 1
 
                 vertices[2 * a] = ax
                 vertices[2 * a + 1] = ay
