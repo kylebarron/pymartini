@@ -7,7 +7,7 @@ from pymartini import Martini, mapbox_terrain_to_grid
 
 
 def test_generate_mesh():
-    path = Path(__file__) / 'fuji.png'
+    path = Path(__file__).parents[0] / 'fuji.png'
     fuji = imread(path)
     terrain = mapbox_terrain_to_grid(fuji)
 
