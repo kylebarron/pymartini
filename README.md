@@ -1,7 +1,9 @@
 # pymartini
 
-A (WIP, currently failing tests) Python port of [Martini][martini] for fast
-terrain mesh generation
+A Python port of [Martini][martini] for fast terrain mesh generation.
+
+It passes the (only) test case included in the original Martini JS library, but
+is currently slow and un-optimized for Python. The only dependency is Numpy.
 
 ## Install
 
