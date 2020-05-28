@@ -2,7 +2,18 @@ import numpy as np
 cimport numpy as np
 
 
-class Martini:
+cdef class Martini:
+    # Define class attributes
+    cdef readonly unsigned short grid_size
+    cdef readonly unsigned int num_triangles
+    cdef readonly unsigned int num_parent_triangles
+
+    # Can't store Numpy arrays as class attributes, but you _can_ store the
+    # associated memoryviews
+    # https://stackoverflow.com/a/23840186
+    cdef public np.uint32_t[:] indices_view
+    cdef public np.uint16_t[:] coords_view
+
     def __init__(self, int grid_size=257):
         self.grid_size = grid_size
         tile_size = grid_size - 1
@@ -18,9 +29,11 @@ class Martini:
         # coordinates for all possible triangles in an RTIN tile
         cdef np.ndarray[np.uint16_t, ndim=1] coords = np.zeros(self.num_triangles * 4, dtype=np.uint16)
 
-        # Py_ssize_t is the proper C type for Python array self.indices.
+        # Py_ssize_t is the proper C type for Python array indices.
         cdef Py_ssize_t i, _id
-        cdef unsigned short [:] coords_view = coords
+        # TODO: Do you need to redeclare these? Already declared in class
+        cdef np.uint32_t[:] indices_view = indices
+        cdef np.uint16_t[:] coords_view = coords
         cdef int k
         cdef unsigned short ax, ay, bx, by, mx, my, cx, cy
 
@@ -61,8 +74,8 @@ class Martini:
             coords_view[k + 2] = bx
             coords_view[k + 3] = by
 
-        self.indices = indices
-        self.coords = coords
+        self.indices_view = indices_view
+        self.coords_view = coords_view
 
     def create_tile(self, terrain):
         return Tile(terrain, self)
@@ -83,18 +96,22 @@ class Tile:
         self.update()
 
     def update(self):
+        coords = np.asarray(self.martini.coords_view, dtype=np.uint16)
+
         self.errors = tile_update(
             num_triangles=self.martini.num_triangles,
             num_parent_triangles=self.martini.num_parent_triangles,
-            coords=self.martini.coords,
+            coords=coords,
             size=self.martini.grid_size,
             terrain=self.terrain,
             errors=self.errors)
 
     def get_mesh(self, max_error=0):
+        indices = np.asarray(self.martini.indices_view, dtype=np.uint32)
+
         return get_mesh(
           errors=self.errors,
-          indices=self.martini.indices,
+          indices=indices,
           size=self.martini.grid_size,
           max_error=max_error
         )
@@ -102,7 +119,7 @@ class Tile:
 
 
 def tile_update(
-    int num_triangles,
+    unsigned int num_triangles,
     int num_parent_triangles,
     np.ndarray[np.uint16_t, ndim=1] coords,
     int size,
