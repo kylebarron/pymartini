@@ -7,6 +7,10 @@ tests are forthcoming. The only dependency is Numpy.
 
 ## Install
 
+Currently only source builds are provided, so you'll need to have Cython and a C
+compiler available during installation. Pull requests are welcome to package as
+platform-specific wheels.
+
 ```
 pip install pymartini
 ```
