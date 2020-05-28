@@ -3,9 +3,66 @@ cimport numpy as np
 
 
 class Martini:
-    def __init__(self, grid_size=257):
-        resp = martini(grid_size)
-        self.grid_size, self.num_triangles, self.num_parent_triangles, self.indices, self.coords = resp
+    def __init__(self, int grid_size=257):
+        self.grid_size = grid_size
+        tile_size = grid_size - 1
+        if tile_size & (tile_size - 1):
+            raise ValueError(
+                f'Expected grid size to be 2^n+1, got {grid_size}.')
+
+        self.num_triangles = tile_size * tile_size * 2 - 2
+        self.num_parent_triangles = self.num_triangles - tile_size * tile_size
+
+        cdef np.ndarray[np.uint32_t, ndim=1] indices = np.zeros(grid_size * grid_size, dtype=np.uint32)
+
+        # coordinates for all possible triangles in an RTIN tile
+        cdef np.ndarray[np.uint16_t, ndim=1] coords = np.zeros(self.num_triangles * 4, dtype=np.uint16)
+
+        # Py_ssize_t is the proper C type for Python array self.indices.
+        cdef Py_ssize_t i, _id
+        cdef unsigned short [:] coords_view = coords
+        cdef int k
+        cdef unsigned short ax, ay, bx, by, mx, my, cx, cy
+
+        # get triangle coordinates from its index in an implicit binary tree
+        for i in range(self.num_triangles):
+            # id is a reserved name in Python
+            _id = i + 2
+
+            ax = ay = bx = by = cx = cy = 0
+            if _id & 1:
+                # bottom-left triangle
+                bx = by = cx = tile_size
+            else:
+                # top-right triangle
+                ax = ay = cy = tile_size
+
+            while (_id >> 1) > 1:
+                # Since Python doesn't have a >>= operator
+                _id = _id >> 1
+
+                mx = (ax + bx) >> 1
+                my = (ay + by) >> 1
+
+                if _id & 1:
+                    # Left half
+                    bx, by = ax, ay
+                    ax, ay = cx, cy
+                else:
+                    # Right half
+                    ax, ay = bx, by
+                    bx, by = cx, cy
+
+                cx, cy = mx, my
+
+            k = i * 4
+            coords_view[k + 0] = ax
+            coords_view[k + 1] = ay
+            coords_view[k + 2] = bx
+            coords_view[k + 3] = by
+
+        self.indices = indices
+        self.coords = coords
 
     def create_tile(self, terrain):
         return Tile(terrain, self)
@@ -42,65 +99,6 @@ class Tile:
           max_error=max_error
         )
 
-
-def martini(int grid_size):
-    tile_size = grid_size - 1
-    if tile_size & (tile_size - 1):
-        raise ValueError(
-            f'Expected grid size to be 2^n+1, got {grid_size}.')
-
-    num_triangles = tile_size * tile_size * 2 - 2
-    num_parent_triangles = num_triangles - tile_size * tile_size
-
-    cdef np.ndarray[np.uint32_t, ndim=1] indices = np.zeros(grid_size * grid_size, dtype=np.uint32)
-
-    # coordinates for all possible triangles in an RTIN tile
-    cdef np.ndarray[np.uint16_t, ndim=1] coords = np.zeros(num_triangles * 4, dtype=np.uint16)
-
-    # Py_ssize_t is the proper C type for Python array indices.
-    cdef Py_ssize_t i, _id
-    cdef unsigned short [:] coords_view = coords
-    cdef int k
-    cdef unsigned short ax, ay, bx, by, mx, my, cx, cy
-
-    # get triangle coordinates from its index in an implicit binary tree
-    for i in range(num_triangles):
-        # id is a reserved name in Python
-        _id = i + 2
-
-        ax = ay = bx = by = cx = cy = 0
-        if _id & 1:
-            # bottom-left triangle
-            bx = by = cx = tile_size
-        else:
-            # top-right triangle
-            ax = ay = cy = tile_size
-
-        while (_id >> 1) > 1:
-            # Since Python doesn't have a >>= operator
-            _id = _id >> 1
-
-            mx = (ax + bx) >> 1
-            my = (ay + by) >> 1
-
-            if _id & 1:
-                # Left half
-                bx, by = ax, ay
-                ax, ay = cx, cy
-            else:
-                # Right half
-                ax, ay = bx, by
-                bx, by = cx, cy
-
-            cx, cy = mx, my
-
-        k = i * 4
-        coords_view[k + 0] = ax
-        coords_view[k + 1] = ay
-        coords_view[k + 2] = bx
-        coords_view[k + 3] = by
-
-    return grid_size, num_triangles, num_parent_triangles, indices, coords
 
 
 def tile_update(
