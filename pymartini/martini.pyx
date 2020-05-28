@@ -126,6 +126,8 @@ cdef class Tile:
         cdef Py_ssize_t i
         cdef int k
         cdef unsigned short ax, ay, bx, by, mx, my, cx, cy
+        cdef float interpolated_height, middle_error
+        cdef unsigned short middle_index, left_child_index, right_child_index
 
         # iterate over all possible triangles, starting from the smallest level
         for i in range(self.max_num_triangles - 1, -1, -1):
