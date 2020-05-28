@@ -24,16 +24,13 @@ cdef class Martini:
         self.max_num_triangles = tile_size * tile_size * 2 - 2
         self.num_parent_triangles = self.max_num_triangles - tile_size * tile_size
 
-        cdef np.ndarray[np.uint32_t, ndim=1] indices = np.zeros(grid_size * grid_size, dtype=np.uint32)
+        self.indices_view = np.zeros(grid_size * grid_size, dtype=np.uint32)
 
         # coordinates for all possible triangles in an RTIN tile
-        cdef np.ndarray[np.uint16_t, ndim=1] coords = np.zeros(self.max_num_triangles * 4, dtype=np.uint16)
+        self.coords_view = np.zeros(self.max_num_triangles * 4, dtype=np.uint16)
 
         # Py_ssize_t is the proper C type for Python array indices.
         cdef Py_ssize_t i, _id
-        # TODO: Do you need to redeclare these? Already declared in class
-        cdef np.uint32_t[:] indices_view = indices
-        cdef np.uint16_t[:] coords_view = coords
         cdef int k
         cdef unsigned short ax, ay, bx, by, mx, my, cx, cy
 
@@ -69,13 +66,10 @@ cdef class Martini:
                 cx, cy = mx, my
 
             k = i * 4
-            coords_view[k + 0] = ax
-            coords_view[k + 1] = ay
-            coords_view[k + 2] = bx
-            coords_view[k + 3] = by
-
-        self.indices_view = indices_view
-        self.coords_view = coords_view
+            self.coords_view[k + 0] = ax
+            self.coords_view[k + 1] = ay
+            self.coords_view[k + 2] = bx
+            self.coords_view[k + 3] = by
 
     def create_tile(self, terrain):
         return Tile(terrain, self)
