@@ -171,8 +171,12 @@ cdef class Tile:
 
         # use an index grid to keep track of vertices that were already used to
         # avoid duplication
-        # I already initialized array with zeros
-        # indices.fill(0)
+        # While indices was initialized with zeros, filling with 0 again
+        # essentially removes any state from the previous time get_mesh was run,
+        # so it can be run many times from the class
+        indices = np.asarray(self.indices_view, dtype=np.uint32)
+        indices.fill(0)
+        self.indices_view = indices
 
         # retrieve mesh in two stages that both traverse the error map:
         # - countElements: find used vertices (and assign each an index), and count triangles (for minimum allocation)
