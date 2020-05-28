@@ -81,7 +81,21 @@ cdef class Martini:
         return Tile(terrain, self)
 
 
-class Tile:
+cdef class Tile:
+    # Define class attributes
+    cdef readonly unsigned short grid_size
+    cdef readonly unsigned int num_triangles
+    cdef readonly unsigned int num_parent_triangles
+
+    # Can't store Numpy arrays as class attributes, but you _can_ store the
+    # associated memoryviews
+    # https://stackoverflow.com/a/23840186
+    cdef public np.uint32_t[:] indices_view
+    cdef public np.uint16_t[:] coords_view
+
+    cdef public np.float32_t[:] terrain_view
+    cdef public np.float32_t[:] errors_view
+
     def __init__(self, terrain, martini):
         size = martini.grid_size
 
@@ -90,29 +104,39 @@ class Tile:
                 f'Expected terrain data of length {size * size} ({size} x {size}), got {len(terrain)}.'
             )
 
-        self.terrain = terrain
-        self.martini = martini
-        self.errors = np.zeros(len(terrain), dtype=np.float32)
+        self.terrain_view = terrain
+        self.errors_view = np.zeros(len(terrain), dtype=np.float32)
+
+        # Expand Martini instance, since I can't cdef a class
+        self.grid_size = martini.grid_size
+        self.num_triangles = martini.num_triangles
+        self.num_parent_triangles = martini.num_parent_triangles
+        self.indices_view = martini.indices_view
+        self.coords_view = martini.coords_view
+
         self.update()
 
     def update(self):
-        coords = np.asarray(self.martini.coords_view, dtype=np.uint16)
+        coords = np.asarray(self.coords_view, dtype=np.uint16)
+        terrain = np.asarray(self.terrain_view, dtype=np.float32)
+        errors = np.asarray(self.errors_view, dtype=np.float32)
 
-        self.errors = tile_update(
-            num_triangles=self.martini.num_triangles,
-            num_parent_triangles=self.martini.num_parent_triangles,
+        self.errors_view = tile_update(
+            num_triangles=self.num_triangles,
+            num_parent_triangles=self.num_parent_triangles,
             coords=coords,
-            size=self.martini.grid_size,
-            terrain=self.terrain,
-            errors=self.errors)
+            size=self.grid_size,
+            terrain=terrain,
+            errors=errors)
 
     def get_mesh(self, max_error=0):
-        indices = np.asarray(self.martini.indices_view, dtype=np.uint32)
+        indices = np.asarray(self.indices_view, dtype=np.uint32)
+        errors = np.asarray(self.errors_view, dtype=np.float32)
 
         return get_mesh(
-          errors=self.errors,
+          errors=errors,
           indices=indices,
-          size=self.martini.grid_size,
+          size=self.grid_size,
           max_error=max_error
         )
 
