@@ -117,17 +117,41 @@ cdef class Tile:
         self.update()
 
     def update(self):
-        coords = np.asarray(self.coords_view, dtype=np.uint16)
-        terrain = np.asarray(self.terrain_view, dtype=np.float32)
-        errors = np.asarray(self.errors_view, dtype=np.float32)
+        cdef unsigned short size
+        size = self.grid_size
 
-        self.errors_view = tile_update(
-            num_triangles=self.num_triangles,
-            num_parent_triangles=self.num_parent_triangles,
-            coords=coords,
-            size=self.grid_size,
-            terrain=terrain,
-            errors=errors)
+        # Py_ssize_t is the proper C type for Python array indices.
+        cdef Py_ssize_t i
+        cdef int k
+        cdef unsigned short ax, ay, bx, by, mx, my, cx, cy
+
+        # iterate over all possible triangles, starting from the smallest level
+        for i in range(self.num_triangles - 1, -1, -1):
+            k = i * 4
+            ax = self.coords_view[k + 0]
+            ay = self.coords_view[k + 1]
+            bx = self.coords_view[k + 2]
+            by = self.coords_view[k + 3]
+            mx = (ax + bx) >> 1
+            my = (ay + by) >> 1
+            cx = mx + my - ay
+            cy = my + ax - mx
+
+            # calculate error in the middle of the long edge of the triangle
+            interpolated_height = (
+                self.terrain_view[ay * size + ax] + self.terrain_view[by * size + bx]) / 2
+            middle_index = my * size + mx
+            middle_error = abs(interpolated_height - self.terrain_view[middle_index])
+
+            self.errors_view[middle_index] = max(self.errors_view[middle_index], middle_error)
+
+            if i < self.num_parent_triangles:
+                # bigger triangles; accumulate error with children
+                left_child_index = ((ay + cy) >> 1) * size + ((ax + cx) >> 1)
+                right_child_index = ((by + cy) >> 1) * size + ((bx + cx) >> 1)
+                self.errors_view[middle_index] = max(
+                    self.errors_view[middle_index], self.errors_view[left_child_index],
+                    self.errors_view[right_child_index])
 
     def get_mesh(self, max_error=0):
         indices = np.asarray(self.indices_view, dtype=np.uint32)
@@ -139,55 +163,6 @@ cdef class Tile:
           size=self.grid_size,
           max_error=max_error
         )
-
-
-
-def tile_update(
-    unsigned int num_triangles,
-    int num_parent_triangles,
-    np.ndarray[np.uint16_t, ndim=1] coords,
-    int size,
-    np.ndarray[np.float32_t, ndim=1] terrain,
-    np.ndarray[np.float32_t, ndim=1] errors):
-
-    cdef unsigned short [:] coords_view = coords
-    cdef float [:] terrain_view = terrain
-    cdef float [:] errors_view = errors
-
-    # Py_ssize_t is the proper C type for Python array indices.
-    cdef Py_ssize_t i
-    cdef int k
-    cdef unsigned short ax, ay, bx, by, mx, my, cx, cy
-
-    # iterate over all possible triangles, starting from the smallest level
-    for i in range(num_triangles - 1, -1, -1):
-        k = i * 4
-        ax = coords_view[k + 0]
-        ay = coords_view[k + 1]
-        bx = coords_view[k + 2]
-        by = coords_view[k + 3]
-        mx = (ax + bx) >> 1
-        my = (ay + by) >> 1
-        cx = mx + my - ay
-        cy = my + ax - mx
-
-        # calculate error in the middle of the long edge of the triangle
-        interpolated_height = (
-            terrain_view[ay * size + ax] + terrain_view[by * size + bx]) / 2
-        middle_index = my * size + mx
-        middle_error = abs(interpolated_height - terrain_view[middle_index])
-
-        errors_view[middle_index] = max(errors_view[middle_index], middle_error)
-
-        if i < num_parent_triangles:
-            # bigger triangles; accumulate error with children
-            left_child_index = ((ay + cy) >> 1) * size + ((ax + cx) >> 1)
-            right_child_index = ((by + cy) >> 1) * size + ((bx + cx) >> 1)
-            errors_view[middle_index] = max(
-                errors_view[middle_index], errors_view[left_child_index],
-                errors_view[right_child_index])
-
-    return errors
 
 
 def get_mesh(
