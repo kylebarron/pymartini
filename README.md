@@ -1,9 +1,9 @@
 # pymartini
 
-A Python port of [Martini][martini] for fast terrain mesh generation.
+A Cython port of [Martini][martini] for fast terrain mesh generation.
 
-It passes the (only) test case included in the original Martini JS library, but
-is currently slow and un-optimized for Python. The only dependency is Numpy.
+It passes the (only) test case included in the original Martini JS library. More
+tests are forthcoming. The only dependency is Numpy.
 
 ## Install
 
@@ -21,7 +21,7 @@ martini = Martini(257)
 tile = martini.create_tile(terrain)
 
 # get a mesh (vertices and triangles indices) for a 10m error
-mesh = tile.get_mesh(10)
+vertices, triangles = tile.get_mesh(10)
 ```
 
 ## License
