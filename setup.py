@@ -1,6 +1,10 @@
 """Setup for pymartini."""
+from pathlib import Path
 
+import numpy as np
+# setuptools must be before Cython
 from setuptools import find_packages, setup
+from Cython.Build import cythonize
 
 with open("README.md") as f:
     readme = f.read()
@@ -9,8 +13,13 @@ with open("README.md") as f:
 inst_reqs = ["numpy"]
 
 extra_reqs = {
-    "test": ["pytest", "pytest-benchmark", "imageio"],
-}
+    "test": ["pytest", "pytest-benchmark", "imageio"], }
+
+
+# Ref https://suzyahyah.github.io/cython/programming/2018/12/01/Gotchas-in-Cython.html
+def find_pyx(path='.'):
+    return list(map(str, Path(path).glob('**/*.pyx')))
+
 
 setup(
     name="pymartini",
@@ -31,10 +40,12 @@ setup(
     author_email="kylebarron2@gmail.com",
     url="https://github.com/kylebarron/pymartini",
     license="MIT",
-    packages=find_packages(
-        exclude=["ez_setup", "scripts", "examples", "test"]),
+    packages=find_packages(exclude=["ez_setup", "scripts", "examples", "test"]),
     include_package_data=True,
     zip_safe=False,
     install_requires=inst_reqs,
     extras_require=extra_reqs,
+    ext_modules=cythonize(find_pyx(), language_level=3),
+    # Include Numpy headers
+    include_dirs=[np.get_include()],
 )
