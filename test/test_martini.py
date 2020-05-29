@@ -79,3 +79,26 @@ def test_errors(png_fname, encoding):
         exp_errors = np.frombuffer(f.read(), dtype=np.float32)
 
     assert np.array_equal(errors, exp_errors), 'errors not matching expected'
+
+
+@pytest.mark.parametrize("png_fname,max_error,encoding", TEST_CASES)
+def test_mesh(png_fname, max_error, encoding):
+    # Generate mesh output in Python
+    path = this_dir() / f'data/{png_fname}.png'
+    png = imread(path)
+    terrain = decode_ele(png, encoding=encoding)
+    martini = Martini(png.shape[0] + 1)
+    tile = martini.create_tile(terrain)
+    vertices, triangles = tile.get_mesh(max_error)
+
+    # Load JS mesh output
+    path = this_dir() / f'data/{png_fname}_vertices_{max_error}'
+    with open(path, 'rb') as f:
+        exp_vertices = np.frombuffer(f.read(), dtype=np.uint16)
+
+    path = this_dir() / f'data/{png_fname}_triangles_{max_error}'
+    with open(path, 'rb') as f:
+        exp_triangles = np.frombuffer(f.read(), dtype=np.uint32)
+
+    assert np.array_equal(vertices, exp_vertices), 'vertices not matching expected'
+    assert np.array_equal(triangles, exp_triangles), 'triangles not matching expected'
