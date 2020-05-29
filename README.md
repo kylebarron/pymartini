@@ -13,10 +13,17 @@ platform-specific wheels.
 pip install pymartini
 ```
 
-## Example
+## Using
+
+### Example
+
+The API is modeled after Martini.
 
 ```py
+from pymartini import Martini
+
 # set up mesh generator for a certain 2^k+1 grid size
+# Usually either 257 or 513
 martini = Martini(257)
 
 # generate RTIN hierarchy from terrain data (an array of size^2 length)
@@ -24,6 +31,37 @@ tile = martini.create_tile(terrain)
 
 # get a mesh (vertices and triangles indices) for a 10m error
 vertices, triangles = tile.get_mesh(10)
+```
+
+### Utilities
+
+A few utilities are included.
+
+#### `decode_ele`
+
+A helper function to decode a PNG terrain tile into elevations.
+
+##### Arguments
+
+- `png` (np.ndarray): Ndarray of elevations encoded in three channels,
+  representing red, green, and blue. Must be of shape (`tile_size`,
+  `tile_size`, >=3), where `tile_size` is usually 256 or 512
+- `encoding` (str): Either 'mapbox' or 'terrarium', the two main RGB
+  encodings for elevation values
+
+##### Returns
+
+- (np.array) Array of shape (tile_size^2) with decoded elevation values
+
+##### Example
+
+```py
+from imageio import imread
+from pymartini import decode_ele
+
+path = './test/data/fuji.png'
+fuji = imread(path)
+terrain = decode_ele(fuji, 'mapbox')
 ```
 
 ## Correctness
@@ -60,6 +98,7 @@ cd martini
 npm install
 node -r esm bench.js
 ```
+
 ```
 init tileset: 54.293ms
 create tile: 17.307ms
@@ -97,6 +136,7 @@ cd pymartini
 pip install .
 python bench.py
 ```
+
 ```
 init tileset: 14.860ms
 create tile: 5.862ms
