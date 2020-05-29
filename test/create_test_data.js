@@ -2,40 +2,6 @@ var fs = require("fs");
 var { PNG } = require("pngjs");
 var Martini = require("@mapbox/martini");
 
-function main() {
-  // Fuji mapbox tile
-  var fuji = PNG.sync.read(fs.readFileSync("./data/fuji.png"));
-  var terrain = terrainToGrid(fuji, true);
-  var martini = new Martini(fuji.width + 1);
-  var tile = martini.createTile(terrain);
-
-  for (var i of [5, 20, 50, 100, 500]) {
-    var { vertices, triangles } = tile.getMesh(i);
-    // Coerce to regular arrays so they can be json encoded
-    var out = {
-      vertices: Array.from(vertices),
-      triangles: Array.from(triangles)
-    };
-    fs.writeFileSync(`./data/fuji_${i}.json`, JSON.stringify(out));
-  }
-
-  // Grand Canyon Terrarium tile
-  var terrarium = PNG.sync.read(fs.readFileSync("./data/terrarium.png"));
-  var terrain = terrainToGrid(terrarium, false);
-  var martini = new Martini(terrarium.width + 1);
-  var tile = martini.createTile(terrain);
-
-  for (var i of [5, 20, 50, 100, 500]) {
-    var { vertices, triangles } = tile.getMesh(i);
-    // Coerce to regular arrays so they can be json encoded
-    var out = {
-      vertices: Array.from(vertices),
-      triangles: Array.from(triangles)
-    };
-    fs.writeFileSync(`./data/terrarium_${i}.json`, JSON.stringify(out));
-  }
-}
-
 function terrainToGrid(png, mapbox) {
   const gridSize = png.width + 1;
   const terrain = new Float32Array(gridSize * gridSize);
@@ -69,6 +35,40 @@ function terrainToGrid(png, mapbox) {
   }
 
   return terrain;
+}
+
+function main() {
+  // Fuji mapbox tile
+  var fuji = PNG.sync.read(fs.readFileSync("./data/fuji.png"));
+  var terrain = terrainToGrid(fuji, true);
+  var martini = new Martini(fuji.width + 1);
+  var tile = martini.createTile(terrain);
+
+  for (var i of [5, 20, 50, 100, 500]) {
+    var { vertices, triangles } = tile.getMesh(i);
+    // Coerce to regular arrays so they can be json encoded
+    var out = {
+      vertices: Array.from(vertices),
+      triangles: Array.from(triangles)
+    };
+    fs.writeFileSync(`./data/fuji_${i}.json`, JSON.stringify(out));
+  }
+
+  // Grand Canyon Terrarium tile
+  var terrarium = PNG.sync.read(fs.readFileSync("./data/terrarium.png"));
+  var terrain = terrainToGrid(terrarium, false);
+  var martini = new Martini(terrarium.width + 1);
+  var tile = martini.createTile(terrain);
+
+  for (var i of [5, 20, 50, 100, 500]) {
+    var { vertices, triangles } = tile.getMesh(i);
+    // Coerce to regular arrays so they can be json encoded
+    var out = {
+      vertices: Array.from(vertices),
+      triangles: Array.from(triangles)
+    };
+    fs.writeFileSync(`./data/terrarium_${i}.json`, JSON.stringify(out));
+  }
 }
 
 main();
