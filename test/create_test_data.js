@@ -37,10 +37,10 @@ function terrainToGrid(png, mapbox) {
   return terrain;
 }
 
-function createTestData(name, maxErrors = []) {
-  // Fuji mapbox tile
+function createTestData(name, mapboxEncoding, maxErrors = []) {
+  // Load png
   var png = PNG.sync.read(fs.readFileSync(`./data/${name}.png`));
-  var terrain = terrainToGrid(png, true);
+  var terrain = terrainToGrid(png, mapboxEncoding);
 
   // Write terrain data output
   fs.writeFileSync(`./data/${name}_terrain`, terrain, "binary");
@@ -63,8 +63,8 @@ function createTestData(name, maxErrors = []) {
 }
 
 function main() {
-  createTestData("fuji", [5, 20, 50, 100, 500]);
-  createTestData("terrarium", [5, 20, 50, 100, 500]);
+  createTestData("fuji", true, [5, 20, 50, 100, 500]);
+  createTestData("terrarium", false, [5, 20, 50, 100, 500]);
 }
 
 main();
