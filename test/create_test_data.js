@@ -55,7 +55,7 @@ function terrainToGrid(png, mapbox) {
           (r * 256 * 256 + g * 256.0 + b) / 10.0 - 10000.0;
       } else {
         // Terrarium encoding
-        terrain[y * gridSize + x] = r * 256 + (g * +b) / 256 - 32768;
+        terrain[y * gridSize + x] = ((r * 256) + g + (b / 256)) - 32768;
       }
     }
   }
