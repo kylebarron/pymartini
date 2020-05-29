@@ -8,7 +8,8 @@ from imageio import imread
 from pymartini import Martini, decode_ele
 
 TEST_CASES = []
-TEST_PNG_FILES = [('fuji', 'mapbox'), ('terrarium', 'terrarium')]
+TEST_PNG_FILES = [('fuji', 'mapbox'), ('mapbox_st_helens', 'mapbox'),
+                  ('terrarium', 'terrarium')]
 for png_fname, encoding in TEST_PNG_FILES:
     for max_error in [5, 20, 50, 100, 500]:
         TEST_CASES.append([png_fname, max_error, encoding])
@@ -100,5 +101,7 @@ def test_mesh(png_fname, max_error, encoding):
     with open(path, 'rb') as f:
         exp_triangles = np.frombuffer(f.read(), dtype=np.uint32)
 
-    assert np.array_equal(vertices, exp_vertices), 'vertices not matching expected'
-    assert np.array_equal(triangles, exp_triangles), 'triangles not matching expected'
+    assert np.array_equal(
+        vertices, exp_vertices), 'vertices not matching expected'
+    assert np.array_equal(
+        triangles, exp_triangles), 'triangles not matching expected'
