@@ -10,9 +10,29 @@ from pymartini import Martini, decode_ele
 TEST_CASES = []
 # terrarium
 # Add terrarium when you have a terrarium_terrain_to_grid
-for png_fname, encoding in [('fuji', 'mapbox')]:
+for png_fname, encoding in [('fuji', 'mapbox'), ('terrarium', 'terrarium')]:
     for max_error in [5, 20, 50, 100, 500]:
         TEST_CASES.append([png_fname, max_error, encoding])
+
+
+@pytest.mark.parametrize("png_fname,max_error,encoding", TEST_CASES)
+def test_terrain(png_fname, max_error, encoding):
+    """Test output from decode_ele against JS output
+    """
+    # Generate terrain output
+    path = Path(__file__).parents[0] / f'data/{png_fname}.png'
+    # path = './data/fuji.png'
+    # path = './data/terrarium.png'
+
+    png = imread(path)
+    terrain = decode_ele(png, encoding=encoding)
+
+    # Load JS terrain output
+    path = Path(__file__).parents[0] / f'data/{png_fname}_terrain'
+    with open(path, 'rb') as f:
+        exp_terrain = np.frombuffer(f.read(), dtype=np.float32)
+
+    assert np.array_equal(terrain, exp_terrain), 'terrain not matching expected'
 
 
 @pytest.mark.parametrize("png_fname,max_error,encoding", TEST_CASES)
