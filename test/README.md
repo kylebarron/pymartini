@@ -10,8 +10,16 @@ npm install
 node create_test_data.js
 ```
 
-This generates `./data/{fuji,terrarium}_{5,20,50,100,500}.json`, a set of JSON
-files holding the `vertices` and `triangles` output from `getMesh`.
+This generates files in the `data/` folder to compare against Python output.
+
+## Run Tests
+
+In the root of the repository, run:
+
+```
+pip install '.[test]'
+pytest
+```
 
 ## Data Sources
 
