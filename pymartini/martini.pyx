@@ -77,26 +77,26 @@ cdef class Martini:
 
 cdef class Tile:
     # Define class attributes
-    cdef unsigned short grid_size
-    cdef unsigned int max_num_triangles
-    cdef unsigned int num_parent_triangles
+    cdef readonly unsigned short grid_size
+    cdef readonly unsigned int max_num_triangles
+    cdef readonly unsigned int num_parent_triangles
 
     # Can't store Numpy arrays as class attributes, but you _can_ store the
     # associated memoryviews
     # https://stackoverflow.com/a/23840186
-    cdef np.uint32_t[:] indices_view
-    cdef np.uint16_t[:] coords_view
+    cdef readonly np.uint32_t[:] indices_view
+    cdef readonly np.uint16_t[:] coords_view
 
-    cdef np.float32_t[:] terrain_view
-    cdef np.float32_t[:] errors_view
+    cdef readonly np.float32_t[:] terrain_view
+    cdef readonly np.float32_t[:] errors_view
 
     # "globals" Used in getMesh
-    cdef unsigned int num_vertices
-    cdef unsigned int num_triangles
-    cdef float max_error
-    cdef unsigned int tri_index
-    cdef np.uint16_t[:] vertices_view
-    cdef np.uint32_t[:] triangles_view
+    cdef readonly unsigned int num_vertices
+    cdef readonly unsigned int num_triangles
+    cdef readonly float max_error
+    cdef readonly unsigned int tri_index
+    cdef readonly np.uint16_t[:] vertices_view
+    cdef readonly np.uint32_t[:] triangles_view
 
     def __init__(self, terrain, martini):
         size = martini.grid_size
@@ -124,8 +124,8 @@ cdef class Tile:
 
         # Py_ssize_t is the proper C type for Python array indices.
         cdef Py_ssize_t i
-        cdef int k
         cdef unsigned short ax, ay, bx, by, mx, my, cx, cy
+        cdef unsigned int k
         cdef float interpolated_height, middle_error
         cdef unsigned int middle_index, left_child_index, right_child_index
 

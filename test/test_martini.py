@@ -1,4 +1,3 @@
-import json
 from pathlib import Path
 
 import numpy as np
@@ -7,12 +6,13 @@ from imageio import imread
 
 from pymartini import Martini, decode_ele
 
-TEST_CASES = []
 TEST_PNG_FILES = [('fuji', 'mapbox'), ('mapbox_st_helens', 'mapbox'),
                   ('terrarium', 'terrarium')]
+TEST_CASES = []
 for png_fname, encoding in TEST_PNG_FILES:
-    for max_error in [5, 20, 50, 100, 500]:
+    for max_error in [1, 5, 20, 50, 100, 500]:
         TEST_CASES.append([png_fname, max_error, encoding])
+
 
 def this_dir():
     try:

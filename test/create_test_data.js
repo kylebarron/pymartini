@@ -65,9 +65,9 @@ function createTestData(name, mapboxEncoding, maxErrors = []) {
 }
 
 function main() {
-  createTestData("fuji", true, [5, 20, 50, 100, 500]);
-  createTestData("mapbox_st_helens", true, [5, 20, 50, 100, 500]);
-  createTestData("terrarium", false, [5, 20, 50, 100, 500]);
+  createTestData("fuji", true, [1, 5, 20, 50, 100, 500]);
+  createTestData("mapbox_st_helens", true, [1, 5, 20, 50, 100, 500]);
+  createTestData("terrarium", false, [1, 5, 20, 50, 100, 500]);
 }
 
 main();
