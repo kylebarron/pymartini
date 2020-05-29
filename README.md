@@ -64,6 +64,54 @@ fuji = imread(path)
 terrain = decode_ele(fuji, 'mapbox')
 ```
 
+#### `rescale_positions`
+
+A helper function to rescale the `vertices` output and add elevations. The
+output is of the form `[x1, y1, z1, x2, y2, z2, ...]`.
+
+##### Arguments
+
+- `vertices`: (`np.array`) vertices output from Martini
+- `terrain`: (`np.array`) array of elevations
+- `tile_size`: (`int`) Original array size. Used to select the right values from
+  the terrain array.
+- `bounds`: (`List[float]`, default `None`) linearly rescale position values to
+  this extent, expected to be [minx, miny, maxx, maxy]. If not provided,
+  rescales to `[0, 0, tile_size, tile_size]`.
+- flip_y: (`bool`, default `False`) Flip y coordinates. Can be useful when
+  original data source is a PNG, since the origin of a PNG is the top left.
+
+##### Returns
+
+- (`np.array`): Array with positions rescaled and including elevations
+
+##### Example
+
+```py
+from imageio import imread
+from pymartini import decode_ele, Martini, rescale_positions
+
+path = './test/data/terrarium.png'
+png = imread(path)
+terrain = decode_ele(png, 'mapbox')
+martini = Martini(png.shape[0] + 1)
+tile = martini.create_tile(terrain)
+vertices, triangles = tile.get_mesh(10)
+
+# Use mercantile to find the bounds in WGS84 of this tile
+import mercantile
+bounds = mercantile.bounds(mercantile.Tile(385, 803, 11))
+
+# Rescale positions to WGS84
+rescaled = rescale_positions(
+    vertices,
+    terrain,
+    tile_size=png.shape[0],
+    bounds=bounds,
+    flip_y=True
+)
+```
+
 ## Correctness
 
 `pymartini` passes the (only) test case included in the original Martini JS

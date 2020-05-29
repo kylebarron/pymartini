@@ -10,8 +10,6 @@ def rescale_positions(
     flip_y=False):
     """Rescale positions and add height as third dimension
 
-    Note this flips the y dimension, since the use
-
     Args:
         - vertices: vertices output from Martini
         - terrain: array of elevations
