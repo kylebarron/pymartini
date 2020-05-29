@@ -6,3 +6,4 @@ __version__ = '0.1.0'
 
 from .martini import Martini
 from .util import decode_ele
+from .util_cy import rescale_positions
