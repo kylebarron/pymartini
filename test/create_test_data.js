@@ -21,7 +21,7 @@ function terrainToGrid(png, mapbox) {
           (r * 256 * 256 + g * 256.0 + b) / 10.0 - 10000.0;
       } else {
         // Terrarium encoding
-        terrain[y * gridSize + x] = ((r * 256) + g + (b / 256)) - 32768;
+        terrain[y * gridSize + x] = r * 256 + g + b / 256 - 32768;
       }
     }
   }
@@ -37,38 +37,34 @@ function terrainToGrid(png, mapbox) {
   return terrain;
 }
 
-function main() {
+function createTestData(name, maxErrors = []) {
   // Fuji mapbox tile
-  var fuji = PNG.sync.read(fs.readFileSync("./data/fuji.png"));
-  var terrain = terrainToGrid(fuji, true);
-  var martini = new Martini(fuji.width + 1);
+  var png = PNG.sync.read(fs.readFileSync(`./data/${name}.png`));
+  var terrain = terrainToGrid(png, true);
+
+  // Write terrain data output
+  fs.writeFileSync(`./data/${name}_terrain`, terrain, "binary");
+
+  var martini = new Martini(png.width + 1);
   var tile = martini.createTile(terrain);
 
-  for (var i of [5, 20, 50, 100, 500]) {
-    var { vertices, triangles } = tile.getMesh(i);
-    // Coerce to regular arrays so they can be json encoded
-    var out = {
-      vertices: Array.from(vertices),
-      triangles: Array.from(triangles)
-    };
-    fs.writeFileSync(`./data/fuji_${i}.json`, JSON.stringify(out));
-  }
+  // Write errors output
+  fs.writeFileSync(`./data/${name}_errors`, tile.errors, "binary");
 
-  // Grand Canyon Terrarium tile
-  var terrarium = PNG.sync.read(fs.readFileSync("./data/terrarium.png"));
-  var terrain = terrainToGrid(terrarium, false);
-  var martini = new Martini(terrarium.width + 1);
-  var tile = martini.createTile(terrain);
-
-  for (var i of [5, 20, 50, 100, 500]) {
-    var { vertices, triangles } = tile.getMesh(i);
-    // Coerce to regular arrays so they can be json encoded
-    var out = {
-      vertices: Array.from(vertices),
-      triangles: Array.from(triangles)
-    };
-    fs.writeFileSync(`./data/terrarium_${i}.json`, JSON.stringify(out));
+  for (var maxError of maxErrors) {
+    var { vertices, triangles } = tile.getMesh(maxError);
+    fs.writeFileSync(`./data/${name}_vertices_${maxError}`, vertices, "binary");
+    fs.writeFileSync(
+      `./data/${name}_triangles_${maxError}`,
+      triangles,
+      "binary"
+    );
   }
+}
+
+function main() {
+  createTestData("fuji", [5, 20, 50, 100, 500]);
+  createTestData("terrarium", [5, 20, 50, 100, 500]);
 }
 
 main();
