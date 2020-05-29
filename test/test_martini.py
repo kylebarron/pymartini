@@ -38,6 +38,30 @@ def test_terrain(png_fname, encoding):
 
 
 @pytest.mark.parametrize("png_fname,encoding", TEST_PNG_FILES)
+def test_martini(png_fname, encoding):
+    """Test output from decode_ele against JS output
+    """
+    # Generate Martini constructor output in Python
+    path = this_dir() / f'data/{png_fname}.png'
+    png = imread(path)
+    martini = Martini(png.shape[0] + 1)
+    indices = np.asarray(martini.indices_view, dtype=np.uint32)
+    coords = np.asarray(martini.coords_view, dtype=np.uint16)
+
+    # Load JS terrain output
+    path = this_dir() / f'data/{png_fname}_martini_indices'
+    with open(path, 'rb') as f:
+        exp_indices = np.frombuffer(f.read(), dtype=np.uint32)
+
+    path = this_dir() / f'data/{png_fname}_martini_coords'
+    with open(path, 'rb') as f:
+        exp_coords = np.frombuffer(f.read(), dtype=np.uint16)
+
+    assert np.array_equal(indices, exp_indices), 'indices not matching expected'
+    assert np.array_equal(coords, exp_coords), 'coords not matching expected'
+
+
+@pytest.mark.parametrize("png_fname,encoding", TEST_PNG_FILES)
 def test_errors(png_fname, encoding):
     """Test errors output from martini.create_tile(terrain)
     """

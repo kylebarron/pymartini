@@ -46,8 +46,10 @@ function createTestData(name, mapboxEncoding, maxErrors = []) {
   fs.writeFileSync(`./data/${name}_terrain`, terrain, "binary");
 
   var martini = new Martini(png.width + 1);
-  var tile = martini.createTile(terrain);
+  fs.writeFileSync(`./data/${name}_martini_indices`, martini.indices, "binary");
+  fs.writeFileSync(`./data/${name}_martini_coords`, martini.coords, "binary");
 
+  var tile = martini.createTile(terrain);
   // Write errors output
   fs.writeFileSync(`./data/${name}_errors`, tile.errors, "binary");
 
