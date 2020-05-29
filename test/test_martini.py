@@ -8,22 +8,17 @@ from imageio import imread
 from pymartini import Martini, decode_ele
 
 TEST_CASES = []
-# terrarium
-# Add terrarium when you have a terrarium_terrain_to_grid
-for png_fname, encoding in [('fuji', 'mapbox'), ('terrarium', 'terrarium')]:
+TEST_PNG_FILES = [('fuji', 'mapbox'), ('terrarium', 'terrarium')]
+for png_fname, encoding in TEST_PNG_FILES:
     for max_error in [5, 20, 50, 100, 500]:
         TEST_CASES.append([png_fname, max_error, encoding])
 
-
-@pytest.mark.parametrize("png_fname,max_error,encoding", TEST_CASES)
-def test_terrain(png_fname, max_error, encoding):
+@pytest.mark.parametrize("png_fname,encoding", TEST_PNG_FILES)
+def test_terrain(png_fname, encoding):
     """Test output from decode_ele against JS output
     """
     # Generate terrain output
     path = Path(__file__).parents[0] / f'data/{png_fname}.png'
-    # path = './data/fuji.png'
-    # path = './data/terrarium.png'
-
     png = imread(path)
     terrain = decode_ele(png, encoding=encoding)
 
