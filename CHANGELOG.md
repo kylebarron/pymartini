@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.2.1] - 2020-06-01
+
+- Test building wheels with Github actions
+
 ## [0.2.0] - 2020-05-28
 
 - Convert Python code to Cython
