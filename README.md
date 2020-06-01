@@ -6,10 +6,11 @@ faster than Martini in Node. The only dependency is Numpy.
 ## Install
 
 Currently only source builds are provided, so you'll need to have Cython and a C
-compiler available during installation. Pull requests are welcome to package as
-platform-specific wheels.
+compiler available during installation. Additionally `numpy` must already exist 
+during install. Pull requests are welcome to package as platform-specific wheels.
 
 ```
+pip install numpy
 pip install pymartini
 ```
 
