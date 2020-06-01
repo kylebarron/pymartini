@@ -2,7 +2,7 @@
 
 __author__ = """Kyle Barron"""
 __email__ = 'kylebarron2@gmail.com'
-__version__ = '0.2.0'
+__version__ = '0.2.1'
 
 from .martini import Martini
 from .util import decode_ele
