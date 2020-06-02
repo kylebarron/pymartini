@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.2.3] - 2020-06-01
+
+- Allow ndarray as input to `Martini.create_tile`
+
 ## [0.2.2] - 2020-06-01
 
 - Allow `decode_ele` to take arrays of transposed shapes, and add an option to
