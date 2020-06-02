@@ -18,6 +18,9 @@ def decode_ele(png, encoding):
     if encoding not in allowed_encodings:
         raise ValueError(f'encoding must be one of {allowed_encodings}')
 
+    if png.shape[0] <= 4:
+        png = png.T
+
     grid_size = png.shape[0] + 1
     terrain = np.zeros((grid_size, grid_size), dtype=np.float32)
 
