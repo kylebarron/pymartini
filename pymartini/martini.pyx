@@ -101,6 +101,10 @@ cdef class Tile:
     def __init__(self, terrain, martini):
         size = martini.grid_size
 
+        # Allow ndarray as input
+        if len(terrain.shape) > 1:
+            terrain = terrain.flatten('C')
+
         if len(terrain) != (size * size):
             raise ValueError(
                 f'Expected terrain data of length {size * size} ({size} x {size}), got {len(terrain)}.'

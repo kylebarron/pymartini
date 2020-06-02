@@ -39,15 +39,22 @@ A helper function to decode a PNG terrain tile into elevations.
 
 ##### Arguments
 
-- `png` (np.ndarray): Ndarray of elevations encoded in three channels,
-  representing red, green, and blue. Must be of shape (`tile_size`,
-  `tile_size`, >=3), where `tile_size` is usually 256 or 512
-- `encoding` (str): Either 'mapbox' or 'terrarium', the two main RGB
+- `png` (`np.ndarray`): Ndarray of elevations encoded in three channels,
+  representing red, green, and blue. Must be of shape (`tile_size`, `tile_size`,
+  `>=3`) or (`>=3`, `tile_size`, `tile_size`), where `tile_size` is usually 256
+  or 512
+- `encoding` (`str`): Either 'mapbox' or 'terrarium', the two main RGB
   encodings for elevation values
+- `backfill` (`bool`, default `True`): Whether to create an array of size
+  (`tile_size + 1`, `tile_size + 1`), backfilling the bottom and right edges. This is used
+  because Martini needs a grid of size `2^n + 1`
 
 ##### Returns
 
-- (np.array) Array of shape (tile_size^2) with decoded elevation values
+- (`np.ndarray`) Array with decoded elevation values. If `backfill` is `True`,
+  returned shape is (`tile_size + 1`, `tile_size + 1`), otherwise returned shape
+  is (`tile_size`, `tile_size`), where `tile_size` is the shape of the input
+  array.
 
 ##### Example
 

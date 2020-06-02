@@ -28,7 +28,7 @@ def test_terrain(png_fname, encoding):
     # Generate terrain output in Python
     path = this_dir() / f'data/{png_fname}.png'
     png = imread(path)
-    terrain = decode_ele(png, encoding=encoding)
+    terrain = decode_ele(png, encoding=encoding).flatten('C')
 
     # Load JS terrain output
     path = this_dir() / f'data/{png_fname}_terrain'

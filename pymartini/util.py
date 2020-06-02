@@ -43,7 +43,7 @@ def decode_ele(png, encoding, backfill=True):
     if backfill:
         terrain = compute_backfill(terrain)
 
-    return terrain.flatten('C')
+    return terrain
 
 
 def compute_backfill(arr):
