@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.2.2] - 2020-06-01
+
+- Allow `decode_ele` to take arrays of transposed shapes, and add an option to
+  turn off backfilling
+
 ## [0.2.1] - 2020-06-01
 
 - Test building wheels with Github actions
