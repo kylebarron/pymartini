@@ -108,9 +108,9 @@ bounds = mercantile.bounds(mercantile.Tile(385, 803, 11))
 rescaled = rescale_positions(
     vertices,
     terrain,
-    tile_size=png.shape[0],
     bounds=bounds,
     flip_y=True
+    column_row=True
 )
 ```
 
