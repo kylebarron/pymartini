@@ -5,5 +5,4 @@ __email__ = 'kylebarron2@gmail.com'
 __version__ = '0.2.3'
 
 from .martini import Martini
-from .util import decode_ele
-from .util_cy import rescale_positions
+from .util import decode_ele, rescale_positions

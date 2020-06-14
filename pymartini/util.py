@@ -58,3 +58,55 @@ def compute_backfill(arr):
     terrain[grid_size - 1, :] = terrain[grid_size - 2, :]
     terrain[:, grid_size - 1] = terrain[:, grid_size - 2]
     return terrain
+
+
+def rescale_positions(
+        vertices, terrain, bounds=None, flip_y=False, column_row=True):
+    """Rescale positions and add height as third dimension
+
+    Args:
+        - vertices: vertices output from Martini
+        - terrain: 2d array of elevations as output by `decode_ele`
+        - bounds: linearly rescale position values to this extent, expected to
+          be [minx, miny, maxx, maxy]. If not provided, no rescaling is done
+        - flip_y: (bool) Flip y coordinates. Useful when original data source is
+          a PNG, since the origin of a PNG is the top left.
+        - column_row (bool) Whether axes represent (column, row) or (row,
+          column). This depends on what package you used to load the original
+          PNG image into numpy. imageio uses (column, row), the default;
+          rasterio uses (row, column). Therefore, if you loaded the png with
+          rasterio, use `column_row=False`.
+
+    Returns:
+        (np.ndarray): ndarray of shape (-1, 3) with positions rescaled and
+        including elevations. Each row represents a single 3D point.
+    """
+    vertices = vertices.reshape(-1, 2)
+
+    # vec3. x, y in pixels/bounds' coordinates, z in meters
+    positions = np.zeros((max(vertices.shape), 3), dtype=np.float32)
+
+    if not bounds:
+        positions[:, :2] = vertices
+    else:
+        tile_size = vertices.max()
+        minx, miny, maxx, maxy = bounds or [0, 0, tile_size, tile_size]
+        x_scale = (maxx - minx) / tile_size
+        y_scale = (maxy - miny) / tile_size
+
+        if flip_y:
+            scalar = np.array([x_scale, -y_scale])
+            offset = np.array([minx, maxy])
+        else:
+            scalar = np.array([x_scale, y_scale])
+            offset = np.array([minx, miny])
+
+        # Rescale x, y positions
+        positions[:, :2] = vertices * scalar + offset
+
+    if column_row:
+        positions[:, 2] = terrain[vertices[:, 1], vertices[:, 0]]
+    else:
+        positions[:, 2] = terrain[vertices[:, 0], vertices[:, 1]]
+
+    return positions

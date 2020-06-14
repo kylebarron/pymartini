@@ -70,23 +70,22 @@ terrain = decode_ele(fuji, 'mapbox')
 #### `rescale_positions`
 
 A helper function to rescale the `vertices` output and add elevations. The
-output is of the form `[x1, y1, z1, x2, y2, z2, ...]`.
+output is a numpy ndarray of the form `[[x1, y1, z1], [x2, y2, z2], ...]`.
 
 ##### Arguments
 
 - `vertices`: (`np.array`) vertices output from Martini
-- `terrain`: (`np.array`) array of elevations
-- `tile_size`: (`int`) Original array size. Used to select the right values from
-  the terrain array.
+- `terrain`: (`np.ndarray`) 2d array of elevations as output by `decode_ele`
 - `bounds`: (`List[float]`, default `None`) linearly rescale position values to
-  this extent, expected to be [minx, miny, maxx, maxy]. If not provided,
-  rescales to `[0, 0, tile_size, tile_size]`.
-- flip_y: (`bool`, default `False`) Flip y coordinates. Can be useful when
+  this extent, expected to be [minx, miny, maxx, maxy]. If not provided, no
+  rescaling is done
+- `flip_y`: (`bool`, default `False`) Flip y coordinates. Can be useful when
   original data source is a PNG, since the origin of a PNG is the top left.
-
-##### Returns
-
-- (`np.array`): Array with positions rescaled and including elevations
+- `column_row` (`bool`, default `True`) Whether axes represent `(column, row)`
+  or `(row, column)`. This depends on what package you used to load the original
+  PNG image into numpy. imageio uses (column, row), the default; rasterio uses
+  (row, column). Therefore, if you loaded the png with rasterio, use
+  `column_row=False`.
 
 ##### Example
 
