@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.3.0] - 2020-06-13
+
+- Add `column_row` argument to `rescale_positions`, to use the right axes when
+  looking up terrain values.
+- Convert `rescale_positions` to python/numpy instead of cython, for ease of
+  maintainability. This does make `rescale_positions` a tiny bit slower, but
+  it's not a perceptible difference. Rescaling 7,000 vertices was 40 μs with the
+  cython code and 190 μs with the python/numpy code.
+
 ## [0.2.3] - 2020-06-01
 
 - Allow ndarray as input to `Martini.create_tile`
