@@ -3,7 +3,10 @@
 A Cython port of [Martini][martini] for fast RTIN terrain mesh generation, 2-3x
 faster than Martini in Node. The only dependency is Numpy.
 
-[![](./assets/grca_wireframe.jpg)](https://kylebarron.dev/quantized-mesh-encoder)
+[![][image_url]][example]
+
+[image_url]: https://raw.githubusercontent.com/kylebarron/pymartini/master/assets/grca_wireframe.jpg
+[example]: https://kylebarron.dev/quantized-mesh-encoder
 
 A wireframe rendering of the Grand Canyon. The mesh is created using
 `pymartini`, encoded using [`quantized-mesh-encoder`][quantized-mesh-encoder],
