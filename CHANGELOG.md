@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.3.1] - 2020-06-20
+
+- Remove `column_row` option of `rescale_positions`; when `False` it created
+  incorrect meshes by using a transposed mesh for the mesh creation and height
+  lookup steps. See #15.
+
 ## [0.3.0] - 2020-06-13
 
 - Add `column_row` argument to `rescale_positions`, to use the right axes when
