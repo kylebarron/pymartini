@@ -42,9 +42,76 @@ tile = martini.create_tile(terrain)
 vertices, triangles = tile.get_mesh(10)
 ```
 
-### Utilities
+### API
 
-A few utilities are included.
+The `Martini` class and `create_tile` and `get_mesh` methods are a direct port
+from the JS Martini library.
+
+Additionally I include two helper functions: `decode_ele` to decode a Mapbox
+Terrain RGB or Terrarium PNG array to elevations; and `rescale_positions`, which
+adds elevations to each vertex and optionally linearly rescales each vertex's XY
+coordinates to a new bounding box.
+
+#### `Martini`
+
+A class to instantiate constants needed for the `create_tile` and `get_mesh`
+steps. As noted in the benchmarks below, instantiating the `Martini` class is
+the slowest of the three functions. If you're planning to create many meshes of
+the same size, create one `Martini` class and create many tiles from it.
+
+##### Arguments
+
+- `grid_size` (`int`, default `257`): the grid size to use when generating the
+  mesh. Must be 2^k+1. If your source heightmap is 256x256 pixels, use
+  `grid_size=257` and backfill the border pixels.
+
+##### Returns
+
+Returns a `Martini` instance on which you can call `create_tile`.
+
+#### `Martini.create_tile`
+
+Generate RTIN hierarchy from terrain data. This is faster than creating the
+`Martini` instance, but slower than creating a mesh for a given max error. If
+you need to create many meshes with different errors for the same tile, you
+should reuse a `Tile` instance.
+
+##### Arguments
+
+- `terrain` (numpy `ndarray`): an array of dtype `float32` representing the
+  input heightmap. The array can either be flattened, of shape (2^k+1 \* 2^k+1)
+  or a two-dimensional array of shape (2^k+1, 2^k+1). Note that for a 2D array
+  pymartini expects indices in (columns, rows) order, so you might need to
+  transpose your array first. Currently an error will be produced if the dtype
+  of your input array is not `np.float32`.
+
+##### Returns
+
+Returns a `Tile` instance on which you can call `get_mesh`.
+
+#### `Tile.get_mesh`
+
+Get a mesh for a given max error.
+
+##### Arguments
+
+- `max_error` (`float`, default `0`): the maximum vertical error for each
+  triangle in the output mesh. For example if the units of the input heightmap
+  is meters, using `max_error=5` would mean that the mesh is continually refined
+  until every triangle approximates the surface of the heightmap within 5
+  meters.
+
+##### Returns
+
+Returns a tuple of (`vertices`, `triangles`).
+
+Each is a flat numpy array. Vertices represents the interleaved **2D**
+coordinates of each vertex, e.g. `[x0, y0, x1, y1, ...]`. If you need 3D
+coordinates, you can use the `rescale_positions` helper function described
+below.
+
+`triangles` represents _indices_ within the `vertices` array. So `[0, 1, 3, ...]` would use the first, second, and fourth vertices within the `vertices`
+array as a single triangle.
 
 #### `decode_ele`
 
@@ -88,17 +155,17 @@ output is a numpy ndarray of the form `[[x1, y1, z1], [x2, y2, z2], ...]`.
 ##### Arguments
 
 - `vertices`: (`np.array`) vertices output from Martini
-- `terrain`: (`np.ndarray`) 2d array of elevations as output by `decode_ele`
+- `terrain`: (`np.ndarray`) 2d heightmap array of elevations as output by
+  `decode_ele`. Expected to have shape (`grid_size`, `grid_size`). **`terrain`
+  is expected to be the exact same array passed to `Martini.create_tile`.** If
+  you use a different or transposed array, the mesh will look weird. See
+  [#15](https://github.com/kylebarron/pymartini/issues/15). If you need to
+  transpose your array, do it before passing to `Martini.create_tile`.
 - `bounds`: (`List[float]`, default `None`) linearly rescale position values to
   this extent, expected to be [minx, miny, maxx, maxy]. If not provided, no
   rescaling is done
 - `flip_y`: (`bool`, default `False`) Flip y coordinates. Can be useful when
   original data source is a PNG, since the origin of a PNG is the top left.
-- `column_row` (`bool`, default `True`) Whether axes represent `(column, row)`
-  or `(row, column)`. This depends on what package you used to load the original
-  PNG image into numpy. imageio uses (column, row), the default; rasterio uses
-  (row, column). Therefore, if you loaded the png with rasterio, use
-  `column_row=False`.
 
 ##### Example
 

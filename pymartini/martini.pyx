@@ -11,8 +11,8 @@ cdef class Martini:
     # Can't store Numpy arrays as class attributes, but you _can_ store the
     # associated memoryviews
     # https://stackoverflow.com/a/23840186
-    cdef public np.uint32_t[:] indices_view
-    cdef public np.uint16_t[:] coords_view
+    cdef readonly np.uint32_t[:] indices_view
+    cdef readonly np.uint16_t[:] coords_view
 
     def __init__(self, int grid_size=257):
         self.grid_size = grid_size

@@ -60,8 +60,7 @@ def compute_backfill(arr):
     return terrain
 
 
-def rescale_positions(
-        vertices, terrain, bounds=None, flip_y=False, column_row=True):
+def rescale_positions(vertices, terrain, bounds=None, flip_y=False):
     """Rescale positions and add height as third dimension
 
     Args:
@@ -71,11 +70,6 @@ def rescale_positions(
           be [minx, miny, maxx, maxy]. If not provided, no rescaling is done
         - flip_y: (bool) Flip y coordinates. Useful when original data source is
           a PNG, since the origin of a PNG is the top left.
-        - column_row (bool) Whether axes represent (column, row) or (row,
-          column). This depends on what package you used to load the original
-          PNG image into numpy. imageio uses (column, row), the default;
-          rasterio uses (row, column). Therefore, if you loaded the png with
-          rasterio, use `column_row=False`.
 
     Returns:
         (np.ndarray): ndarray of shape (-1, 3) with positions rescaled and
@@ -104,9 +98,6 @@ def rescale_positions(
         # Rescale x, y positions
         positions[:, :2] = vertices * scalar + offset
 
-    if column_row:
-        positions[:, 2] = terrain[vertices[:, 1], vertices[:, 0]]
-    else:
-        positions[:, 2] = terrain[vertices[:, 0], vertices[:, 1]]
+    positions[:, 2] = terrain[vertices[:, 1], vertices[:, 0]]
 
     return positions
