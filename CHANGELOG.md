@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.3.2] - 2020-09-25
+
+- Include *pyx files in package manifest
+
 ## [0.3.1] - 2020-06-20
 
 - Remove `column_row` option of `rescale_positions`; when `False` it created

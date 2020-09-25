@@ -23,7 +23,7 @@ def find_pyx(path='.'):
 
 setup(
     name="pymartini",
-    version="0.3.1",
+    version="0.3.2",
     description="A Python port of Martini for fast terrain mesh generation",
     long_description=readme,
     long_description_content_type="text/markdown",
