@@ -18,8 +18,16 @@ served on-demand using [`dem-tiler`][dem-tiler], and rendered with
 
 ## Install
 
+With pip:
+
 ```
 pip install pymartini
+```
+
+or with Conda:
+
+```
+conda install -c conda-forge pymartini
 ```
 
 ## Using
