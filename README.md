@@ -271,7 +271,7 @@ mesh 20: 3.619ms
 ```bash
 git clone https://github.com/kylebarron/pymartini
 cd pymartini
-pip install .
+pip install '.[test]'
 python bench.py
 ```
 
