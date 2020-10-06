@@ -228,44 +228,6 @@ If you'd like to explore this in more detail, look at the `Tile.update()` in
 Preparation steps are about 3x faster in Python than in Node; generating the
 mesh is about 2x faster in Python than in Node.
 
-### JS (Node)
-
-```bash
-git clone https://github.com/mapbox/martini
-cd martini
-npm install
-node -r esm bench.js
-```
-
-```
-init tileset: 54.293ms
-create tile: 17.307ms
-mesh: 6.230ms
-vertices: 9704, triangles: 19086
-mesh 0: 43.181ms
-mesh 1: 33.102ms
-mesh 2: 30.735ms
-mesh 3: 25.935ms
-mesh 4: 20.643ms
-mesh 5: 17.511ms
-mesh 6: 15.066ms
-mesh 7: 13.334ms
-mesh 8: 11.180ms
-mesh 9: 9.651ms
-mesh 10: 9.240ms
-mesh 11: 10.996ms
-mesh 12: 7.520ms
-mesh 13: 6.617ms
-mesh 14: 5.860ms
-mesh 15: 5.693ms
-mesh 16: 4.907ms
-mesh 17: 4.469ms
-mesh 18: 4.267ms
-mesh 19: 4.267ms
-mesh 20: 3.619ms
-20 meshes total: 290.256ms
-```
-
 ### Python
 
 ```bash
@@ -302,6 +264,44 @@ mesh 18: 2.250ms
 mesh 19: 2.293ms
 mesh 20: 2.281ms
 20 meshes total: 155.559ms
+```
+
+### JS (Node)
+
+```bash
+git clone https://github.com/mapbox/martini
+cd martini
+npm install
+node -r esm bench.js
+```
+
+```
+init tileset: 54.293ms
+create tile: 17.307ms
+mesh: 6.230ms
+vertices: 9704, triangles: 19086
+mesh 0: 43.181ms
+mesh 1: 33.102ms
+mesh 2: 30.735ms
+mesh 3: 25.935ms
+mesh 4: 20.643ms
+mesh 5: 17.511ms
+mesh 6: 15.066ms
+mesh 7: 13.334ms
+mesh 8: 11.180ms
+mesh 9: 9.651ms
+mesh 10: 9.240ms
+mesh 11: 10.996ms
+mesh 12: 7.520ms
+mesh 13: 6.617ms
+mesh 14: 5.860ms
+mesh 15: 5.693ms
+mesh 16: 4.907ms
+mesh 17: 4.469ms
+mesh 18: 4.267ms
+mesh 19: 4.267ms
+mesh 20: 3.619ms
+20 meshes total: 290.256ms
 ```
 
 ## License
