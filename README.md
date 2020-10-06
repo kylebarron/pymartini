@@ -202,6 +202,36 @@ rescaled = rescale_positions(
 )
 ```
 
+## `Martini` or `Delatin`?
+
+Two popular algorithms for terrain mesh generation are the **"Martini"**
+algorithm, found in the JavaScript [`martini`][martini] library and this Python
+`pymartini` library, and the **"Delatin"** algorithm, found in the
+C++ [`hmm`][hmm] library, the Python [`pydelatin`][pydelatin] library, and the JavaScript
+[`delatin`][delatin] library.
+
+Which to use?
+
+For most purposes, use `pydelatin` over `pymartini`. A good breakdown from [a
+Martini issue][martini_desc_issue]:
+
+> Martini:
+>
+> - Only works on square 2^n+1 x 2^n+1 grids.
+> - Generates a hierarchy of meshes (pick arbitrary detail after a single run)
+> - Optimized for meshing speed rather than quality.
+>
+> Delatin:
+>
+> - Works on arbitrary raster grids.
+> - Generates a single mesh for a particular detail.
+> - Optimized for quality (as few triangles as possible for a given error).
+
+[hmm]: https://github.com/fogleman/hmm
+[pydelatin]: https://github.com/kylebarron/pydelatin
+[delatin]: https://github.com/mapbox/delatin
+[martini_desc_issue]: https://github.com/mapbox/martini/issues/15#issuecomment-700475731
+
 ## Correctness
 
 `pymartini` passes the (only) test case included in the original Martini JS
