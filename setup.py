@@ -4,7 +4,8 @@ from pathlib import Path
 import numpy as np
 # setuptools must be before Cython
 from setuptools import find_packages, setup
-from Cython.Build import cythonize
+
+from Cython.Build import cythonize  # isort: skip
 
 with open("README.md") as f:
     readme = f.read()

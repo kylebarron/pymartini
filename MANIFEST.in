@@ -1,6 +1,7 @@
 include CHANGELOG.md
 include LICENSE
 include README.md
+include pymartini/py.typed
 
 global-include *.pyx
 
