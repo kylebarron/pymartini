@@ -9,9 +9,9 @@ from pymartini import Martini, decode_ele
 TEST_PNG_FILES = [('fuji', 'mapbox'), ('mapbox_st_helens', 'mapbox'),
                   ('terrarium', 'terrarium')]
 TEST_CASES = []
-for png_fname, encoding in TEST_PNG_FILES:
-    for max_error in [1, 5, 20, 50, 100, 500]:
-        TEST_CASES.append([png_fname, max_error, encoding])
+for _png_fname, _encoding in TEST_PNG_FILES:
+    for _max_error in [1, 5, 20, 50, 100, 500]:
+        TEST_CASES.append([_png_fname, _max_error, _encoding])
 
 
 def this_dir():
@@ -42,6 +42,8 @@ def test_terrain(png_fname, encoding):
 def test_martini(png_fname, encoding):
     """Test output from decode_ele against JS output
     """
+    # pylint: disable=unused-argument
+
     # Generate Martini constructor output in Python
     path = this_dir() / f'data/{png_fname}.png'
     png = imread(path)
