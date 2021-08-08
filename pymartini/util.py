@@ -3,8 +3,7 @@ from typing import Tuple
 import numpy as np
 
 
-def decode_ele(
-        png: np.ndarray, encoding: str, backfill: bool = True) -> np.ndarray:
+def decode_ele(png: np.ndarray, encoding: str, backfill: bool = True) -> np.ndarray:
     """Decode array to elevations
 
     Arguments:
@@ -55,7 +54,7 @@ def compute_backfill(arr: np.ndarray) -> np.ndarray:
     terrain = np.zeros((grid_size, grid_size), dtype=np.float32)
 
     # Copy to larger array to allow backfilling
-    np.copyto(terrain[:grid_size - 1, :grid_size - 1], arr)
+    np.copyto(terrain[: grid_size - 1, : grid_size - 1], arr)
 
     # backfill right and bottom borders
     terrain[grid_size - 1, :] = terrain[grid_size - 2, :]
@@ -64,10 +63,11 @@ def compute_backfill(arr: np.ndarray) -> np.ndarray:
 
 
 def rescale_positions(
-        vertices: np.ndarray,
-        terrain: np.ndarray,
-        bounds: Tuple[float, float, float, float] = None,
-        flip_y: bool = False) -> np.ndarray:
+    vertices: np.ndarray,
+    terrain: np.ndarray,
+    bounds: Tuple[float, float, float, float] = None,
+    flip_y: bool = False,
+) -> np.ndarray:
     """Rescale positions and add height as third dimension
 
     Args:
