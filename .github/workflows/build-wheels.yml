@@ -20,7 +20,9 @@ jobs:
     - name: Build wheels
       uses: pypa/cibuildwheel@v2.1.1
       env:
-        CIBW_BUILD: "cp36-* cp37-* cp38-* cp39-*"
+        # From rio-color here:
+        # https://github.com/mapbox/rio-color/blob/0ab59ad8e2db99ad1d0c8bd8c2e4cf8d0c3114cf/appveyor.yml#L3
+        CIBW_SKIP: "cp2* cp35* pp* *-win32 *-manylinux_i686"
         CIBW_BEFORE_BUILD: python -m pip install numpy Cython
 
     - uses: actions/upload-artifact@v2
