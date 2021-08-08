@@ -6,8 +6,11 @@ from imageio import imread
 
 from pymartini import Martini, decode_ele
 
-TEST_PNG_FILES = [('fuji', 'mapbox'), ('mapbox_st_helens', 'mapbox'),
-                  ('terrarium', 'terrarium')]
+TEST_PNG_FILES = [
+    ('fuji', 'mapbox'),
+    ('mapbox_st_helens', 'mapbox'),
+    ('terrarium', 'terrarium'),
+]
 TEST_CASES = []
 for _png_fname, _encoding in TEST_PNG_FILES:
     for _max_error in [1, 5, 20, 50, 100, 500]:
@@ -23,8 +26,7 @@ def this_dir():
 
 @pytest.mark.parametrize("png_fname,encoding", TEST_PNG_FILES)
 def test_terrain(png_fname, encoding):
-    """Test output from decode_ele against JS output
-    """
+    """Test output from decode_ele against JS output"""
     # Generate terrain output in Python
     path = this_dir() / f'data/{png_fname}.png'
     png = imread(path)
@@ -40,8 +42,7 @@ def test_terrain(png_fname, encoding):
 
 @pytest.mark.parametrize("png_fname,encoding", TEST_PNG_FILES)
 def test_martini(png_fname, encoding):
-    """Test output from decode_ele against JS output
-    """
+    """Test output from decode_ele against JS output"""
     # pylint: disable=unused-argument
 
     # Generate Martini constructor output in Python
@@ -66,8 +67,7 @@ def test_martini(png_fname, encoding):
 
 @pytest.mark.parametrize("png_fname,encoding", TEST_PNG_FILES)
 def test_errors(png_fname, encoding):
-    """Test errors output from martini.create_tile(terrain)
-    """
+    """Test errors output from martini.create_tile(terrain)"""
     # Generate errors output in Python
     path = this_dir() / f'data/{png_fname}.png'
     png = imread(path)
@@ -103,7 +103,5 @@ def test_mesh(png_fname, max_error, encoding):
     with open(path, 'rb') as f:
         exp_triangles = np.frombuffer(f.read(), dtype=np.uint32)
 
-    assert np.array_equal(
-        vertices, exp_vertices), 'vertices not matching expected'
-    assert np.array_equal(
-        triangles, exp_triangles), 'triangles not matching expected'
+    assert np.array_equal(vertices, exp_vertices), 'vertices not matching expected'
+    assert np.array_equal(triangles, exp_triangles), 'triangles not matching expected'

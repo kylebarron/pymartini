@@ -2,6 +2,7 @@
 from pathlib import Path
 
 import numpy as np
+
 # setuptools must be before Cython
 from setuptools import find_packages, setup
 
@@ -15,7 +16,8 @@ inst_reqs = ["numpy"]
 
 extra_reqs = {
     "test": ["pytest", "pytest-benchmark", "imageio"],
-    "build": ["numpy", "Cython"]}
+    "build": ["numpy", "Cython"],
+}
 
 
 # Ref https://suzyahyah.github.io/cython/programming/2018/12/01/Gotchas-in-Cython.html
@@ -37,7 +39,8 @@ setup(
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
-        "Topic :: Scientific/Engineering :: GIS"],
+        "Topic :: Scientific/Engineering :: GIS",
+    ],
     keywords="mesh heightmap elevation terrain numpy",
     author="Kyle Barron",
     author_email="kylebarron2@gmail.com",
