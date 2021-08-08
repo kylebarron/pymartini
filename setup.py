@@ -14,7 +14,8 @@ with open("README.md") as f:
 inst_reqs = ["numpy"]
 
 extra_reqs = {
-    "test": ["pytest", "pytest-benchmark", "imageio"], }
+    "test": ["pytest", "pytest-benchmark", "imageio"],
+    "build": ["numpy", "Cython"]}
 
 
 # Ref https://suzyahyah.github.io/cython/programming/2018/12/01/Gotchas-in-Cython.html
