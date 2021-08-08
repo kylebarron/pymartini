@@ -16,6 +16,7 @@ inst_reqs = ["numpy"]
 
 extra_reqs = {
     "test": ["pytest", "pytest-benchmark", "imageio"],
+    "build": ["numpy", "Cython"],
 }
 
 
