@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.4.0] - 2021-08-08
+
+- Add type information for mypy
+- Create wheels for M1 Macs
+- Documentation updates
+
 ## [0.3.2] - 2020-09-25
 
 - Include *pyx files in package manifest
