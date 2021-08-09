@@ -253,6 +253,13 @@ JavaScript.
 If you'd like to explore this in more detail, look at the `Tile.update()` in
 `martini.pyx` and the corresponding Martini code.
 
+## Type Checking
+
+As of `pymartini` 0.4.0, types are provided, which can be used with a checker
+like [`mypy`](https://mypy.readthedocs.io/). If you wish to get the full
+benefit, make sure to [enable Numpy's mypy
+plugin](https://numpy.org/devdocs/reference/typing.html#examples).
+
 ## Benchmark
 
 Preparation steps are about 3x faster in Python than in Node; generating the
