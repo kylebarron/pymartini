@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.4.1] - 2021-12-05
+
+- Create wheels for Python 3.10
+
 ## [0.4.0] - 2021-08-08
 
 - Add type information for mypy
