@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.4.2] - 2021-12-05
+
+- Use `oldest-supported-numpy` for greatest compatibility
+
 ## [0.4.1] - 2021-12-05
 
 - Create wheels for Python 3.10
