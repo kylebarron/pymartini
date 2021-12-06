@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.4.3] - 2021-12-05
+
+- Build `musllinux` wheels
+
 ## [0.4.2] - 2021-12-05
 
 - Use `oldest-supported-numpy` for greatest compatibility
