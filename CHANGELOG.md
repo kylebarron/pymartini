@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.4.4] - 2022-11-18
+
+- Python 3.11 wheels
+
 ## [0.4.3] - 2021-12-05
 
 - Build `musllinux` wheels
