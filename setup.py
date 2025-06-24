@@ -1,4 +1,5 @@
 """Setup for pymartini."""
+
 from pathlib import Path
 
 import numpy as np
@@ -20,14 +21,14 @@ extra_reqs = {
 
 
 # Ref https://suzyahyah.github.io/cython/programming/2018/12/01/Gotchas-in-Cython.html
-def find_pyx(path='.'):
-    return list(map(str, Path(path).glob('**/*.pyx')))
+def find_pyx(path="."):
+    return list(map(str, Path(path).glob("**/*.pyx")))
 
 
 setup(
     name="pymartini",
     version="0.4.4",
-    python_requires=">=3.6",
+    python_requires=">=3.9",
     description="A Python port of Martini for fast terrain mesh generation",
     long_description=readme,
     long_description_content_type="text/markdown",
