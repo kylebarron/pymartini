@@ -61,7 +61,6 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: artifact
           path: dist
           merge-multiple: true
 
