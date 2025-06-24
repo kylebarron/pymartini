@@ -27,7 +27,7 @@ def find_pyx(path="."):
 
 setup(
     name="pymartini",
-    version="0.4.4",
+    version="0.5.0",
     python_requires=">=3.9",
     description="A Python port of Martini for fast terrain mesh generation",
     long_description=readme,

@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.5.0] - 2025-06-24
+
+- Numpy v2 support.
+- Updated wheels
+- Min Python version 3.9
+
 ## [0.4.4] - 2022-11-18
 
 - Python 3.11 wheels
