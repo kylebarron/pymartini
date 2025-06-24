@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.5.1] - 2025-06-24
+
+- Fixed `__version__` in `__init__.py`.
+
 ## [0.5.0] - 2025-06-24
 
 - Numpy v2 support.
