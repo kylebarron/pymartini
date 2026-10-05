@@ -1,5 +1,9 @@
-# Project metadata lives in pyproject.toml. This file only declares the Cython
-# extension, which setuptools can't yet configure from pyproject.toml alone.
+"""Build configuration for the `pymartini.martini` Cython extension.
+
+Project metadata lives in pyproject.toml. This file only declares the Cython
+extension, which setuptools can't yet configure from pyproject.toml alone.
+"""
+
 import numpy as np
 from Cython.Build import cythonize
 from setuptools import setup

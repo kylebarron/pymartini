@@ -150,9 +150,9 @@ A helper function to decode a PNG terrain tile into elevations.
 from imageio import imread
 from pymartini import decode_ele
 
-path = './test/data/fuji.png'
+path = "./test/data/fuji.png"
 fuji = imread(path)
-terrain = decode_ele(fuji, 'mapbox')
+terrain = decode_ele(fuji, "mapbox")
 ```
 
 #### `rescale_positions`

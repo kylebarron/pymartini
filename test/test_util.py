@@ -4,7 +4,7 @@ import pytest
 from pymartini import decode_ele
 
 
-def _rgb_tile(rgb):
+def _rgb_tile(rgb) -> np.ndarray:
     # Use a tile larger than 4px so decode_ele doesn't treat it as band-first
     return np.tile(np.array(rgb, dtype=np.uint8), (8, 8, 1))
 
