@@ -235,23 +235,16 @@ Martini issue][martini_desc_issue]:
 ## Correctness
 
 `pymartini` passes the (only) test case included in the original Martini JS
-library. I also wrote a few extra conformance tests to compare output by
-`pymartini` and Martini. I've found some small differences in float values at
-the end of the second step.
+library. I also wrote extra conformance tests that compare the output of
+`pymartini` and Martini on three tiles: the decoded terrain, the error map
+computed by `martini.create_tile(terrain)`, and the meshes for max errors from 1
+to 500. All of them match Martini's output exactly.
 
-This second step, `martini.create_tile(terrain)`, computes the maximum error of
-every possible triangle and accumulates them. Thus, small float errors appear to
-be magnified by the summation of errors into larger triangles. These errors
-appear to be within `1e-5` of the JS output. I'm guessing that this variance is
-greater than normal float rounding errors, due to this summation behavior.
-
-These differences are larger when using 512px tiles compared to 256px tiles,
-which reinforces my hypothesis that the differences have something to do with
-small low-level float or bitwise operations differences between Python and
-JavaScript.
-
-If you'd like to explore this in more detail, look at the `Tile.update()` in
-`martini.pyx` and the corresponding Martini code.
+Versions up to 0.5.1 computed triangle errors in single (`float32`) precision,
+while Martini computes them in double precision. This made the error map differ
+slightly from Martini's, and some meshes with a low max error had a few fewer
+vertices than Martini's. See
+[#6](https://github.com/kylebarron/pymartini/issues/6).
 
 ## Type Checking
 
@@ -277,7 +270,7 @@ uv run python bench.py
 init tileset: 14.860ms
 create tile: 5.862ms
 mesh (max_error=30): 1.010ms
-vertices: 9700.0, triangles: 19078.0
+vertices: 9704.0, triangles: 19086.0
 mesh 0: 18.350ms
 mesh 1: 17.581ms
 mesh 2: 15.245ms

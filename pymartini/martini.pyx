@@ -130,7 +130,7 @@ cdef class Tile:
         cdef Py_ssize_t i
         cdef unsigned short ax, ay, bx, by, mx, my, cx, cy
         cdef unsigned int k
-        cdef float interpolated_height, middle_error
+        cdef double interpolated_height, middle_error
         cdef unsigned int middle_index, left_child_index, right_child_index
 
         # iterate over all possible triangles, starting from the smallest level
@@ -145,9 +145,11 @@ cdef class Tile:
             cx = mx + my - ay
             cy = my + ax - mx
 
-            # calculate error in the middle of the long edge of the triangle
+            # calculate error in the middle of the long edge of the triangle.
+            # Compute in double precision, as JS does, so that errors (and so
+            # meshes) match Martini's output exactly
             interpolated_height = (
-                self.terrain_view[ay * size + ax] + self.terrain_view[by * size + bx]) / 2
+                <double>self.terrain_view[ay * size + ax] + self.terrain_view[by * size + bx]) / 2
             middle_index = my * size + mx
             middle_error = abs(interpolated_height - self.terrain_view[middle_index])
 
