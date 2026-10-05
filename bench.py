@@ -4,7 +4,7 @@ from imageio import imread
 
 from pymartini import Martini, decode_ele
 
-path = "./test/data/fuji.png"
+path = "./tests/data/fuji.png"
 fuji = imread(path)
 terrain = decode_ele(fuji, "mapbox")
 

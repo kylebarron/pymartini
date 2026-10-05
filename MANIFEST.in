@@ -7,5 +7,6 @@ include pymartini/martini.pyi
 global-include *.pyx
 
 recursive-include tests *
+prune tests/martini_js
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]

@@ -1,0 +1,290 @@
+{
+  "fuji": {
+    "terrain": {
+      "dtype": "float32",
+      "length": 263169,
+      "sha256": "8622a8bdc03b69b92aeb32408021228cc9d4f9669d2d5f02ac0accbd10428613"
+    },
+    "martini_indices": {
+      "dtype": "uint32",
+      "length": 263169,
+      "sha256": "632632a0971b30716ae72bbc94802888d69c71e3d55ddf51601d118784ca73e9"
+    },
+    "martini_coords": {
+      "dtype": "uint16",
+      "length": 2097144,
+      "sha256": "66ce23ded8780d4ef259135b600f3cbd5f67ffa7f3768c448f61183f0d14fa47"
+    },
+    "errors": {
+      "dtype": "float32",
+      "length": 263169,
+      "sha256": "a70a44d59dc236f7df94a98804bbd312e51bc37727764eaaa19445fd68ee8026"
+    },
+    "meshes": {
+      "1": {
+        "vertices": {
+          "dtype": "uint16",
+          "length": 434616,
+          "sha256": "6b708937ab482502cea66e850f09b3817bd71527a115915b011ab3be0a4e9cda"
+        },
+        "triangles": {
+          "dtype": "uint32",
+          "length": 1298754,
+          "sha256": "4ead2e518a910499c96c25daec9d07380eec90f32549eca8996bb40d870fb9e2"
+        }
+      },
+      "5": {
+        "vertices": {
+          "dtype": "uint16",
+          "length": 189064,
+          "sha256": "98fde38aa6e0083916bbedfe559bbda0dc9e2d78d9daae076ca869c79a6d291d"
+        },
+        "triangles": {
+          "dtype": "uint32",
+          "length": 563955,
+          "sha256": "b9f3c7dac9fe5044d4fd0265566a9b9d29b3433a28c13e6562a39e3c7ce98b54"
+        }
+      },
+      "20": {
+        "vertices": {
+          "dtype": "uint16",
+          "length": 35542,
+          "sha256": "b9a7102c95118867d7fdeef6e94d27095c5a04631cbe563f8f57117028341a5c"
+        },
+        "triangles": {
+          "dtype": "uint32",
+          "length": 105327,
+          "sha256": "dad9d9cfccc3088a94c97090d314214863de58bff3f886f74230bf0e5c9b3a50"
+        }
+      },
+      "50": {
+        "vertices": {
+          "dtype": "uint16",
+          "length": 8464,
+          "sha256": "b885f240c882472dd756d72f75c99e40dd171eeaeda7e9409f837c5c02c8468c"
+        },
+        "triangles": {
+          "dtype": "uint32",
+          "length": 24771,
+          "sha256": "b8f18a7b3bc17ee5980dd82a8c4e6d743426bb2cdb52acb278ec12149f9a9e69"
+        }
+      },
+      "100": {
+        "vertices": {
+          "dtype": "uint16",
+          "length": 2478,
+          "sha256": "26174294fd7774b9a60d8eeaa73e3df7d12317ff541ed10964f34dbc2a714912"
+        },
+        "triangles": {
+          "dtype": "uint32",
+          "length": 7119,
+          "sha256": "5592f2f6de44779cd3113acabb591150e075df9387777ab088d086173fb2c828"
+        }
+      },
+      "500": {
+        "vertices": {
+          "dtype": "uint16",
+          "length": 92,
+          "sha256": "1c006649dd7a9a095ee0d4848ee1bac775c7ec4a2c05a344689ae76c169ce0d5"
+        },
+        "triangles": {
+          "dtype": "uint32",
+          "length": 225,
+          "sha256": "75a7d32968ef0627698df41934071a0e181de904ee37d7d60dac2418454c90c0"
+        }
+      }
+    }
+  },
+  "mapbox_st_helens": {
+    "terrain": {
+      "dtype": "float32",
+      "length": 66049,
+      "sha256": "3338599749aaa1a06c655d301a589508a817a7db9aa563a59212693d14cc2f7d"
+    },
+    "martini_indices": {
+      "dtype": "uint32",
+      "length": 66049,
+      "sha256": "259ed407692ce420a3c27c9ed3515f5ba1e756c9ac279133e8a53cf21a4d3fd0"
+    },
+    "martini_coords": {
+      "dtype": "uint16",
+      "length": 524280,
+      "sha256": "ae7585b02ff958442735bf6d52feef998ff486403ff24f25e55564ca8d917c34"
+    },
+    "errors": {
+      "dtype": "float32",
+      "length": 66049,
+      "sha256": "ec3746c436107e4b03e65e82887dc3dfdc9aef6123037afe31410f25f2f44921"
+    },
+    "meshes": {
+      "1": {
+        "vertices": {
+          "dtype": "uint16",
+          "length": 2886,
+          "sha256": "2671745df62f07400b53ebe8d9a6522b4d7f9dcf1b8133576b54667692758770"
+        },
+        "triangles": {
+          "dtype": "uint32",
+          "length": 8295,
+          "sha256": "5e7b070ded427d212c4c5b11b86e2204355ae3ceabecbae108a87ec25f5a3697"
+        }
+      },
+      "5": {
+        "vertices": {
+          "dtype": "uint16",
+          "length": 510,
+          "sha256": "bd16f969aa7012a8afe42b66e8a7e880dae5662f18aa1a91e198b4aab67716f3"
+        },
+        "triangles": {
+          "dtype": "uint32",
+          "length": 1386,
+          "sha256": "3d2dce99a9480b2b2d42dd81a1c925e1e86b6866d2c52a13f61e38500b25e71e"
+        }
+      },
+      "20": {
+        "vertices": {
+          "dtype": "uint16",
+          "length": 44,
+          "sha256": "5f718644a9aef31b3005c652c47cc46532183481bc6f15fa14d5caeba9db8e75"
+        },
+        "triangles": {
+          "dtype": "uint32",
+          "length": 81,
+          "sha256": "d5d8167708c3f25b24cd3d1e207a22236e4fd7937e7eb7db0b0bc74a8d677be8"
+        }
+      },
+      "50": {
+        "vertices": {
+          "dtype": "uint16",
+          "length": 8,
+          "sha256": "c3cd22cf099757ddde992bdced8f0acb17d610a0a8f2caba253768ebed77cbbb"
+        },
+        "triangles": {
+          "dtype": "uint32",
+          "length": 6,
+          "sha256": "db96679c1d0c73505ad9af543cb906f56e002fe26a9e2cd34da2ff02f61ebb53"
+        }
+      },
+      "100": {
+        "vertices": {
+          "dtype": "uint16",
+          "length": 8,
+          "sha256": "c3cd22cf099757ddde992bdced8f0acb17d610a0a8f2caba253768ebed77cbbb"
+        },
+        "triangles": {
+          "dtype": "uint32",
+          "length": 6,
+          "sha256": "db96679c1d0c73505ad9af543cb906f56e002fe26a9e2cd34da2ff02f61ebb53"
+        }
+      },
+      "500": {
+        "vertices": {
+          "dtype": "uint16",
+          "length": 8,
+          "sha256": "c3cd22cf099757ddde992bdced8f0acb17d610a0a8f2caba253768ebed77cbbb"
+        },
+        "triangles": {
+          "dtype": "uint32",
+          "length": 6,
+          "sha256": "db96679c1d0c73505ad9af543cb906f56e002fe26a9e2cd34da2ff02f61ebb53"
+        }
+      }
+    }
+  },
+  "terrarium": {
+    "terrain": {
+      "dtype": "float32",
+      "length": 66049,
+      "sha256": "dfd4a7cafa5a46cea9259dbd26d4330dd1dc9de6a98e13b87f86c1ed72a1ca32"
+    },
+    "martini_indices": {
+      "dtype": "uint32",
+      "length": 66049,
+      "sha256": "259ed407692ce420a3c27c9ed3515f5ba1e756c9ac279133e8a53cf21a4d3fd0"
+    },
+    "martini_coords": {
+      "dtype": "uint16",
+      "length": 524280,
+      "sha256": "ae7585b02ff958442735bf6d52feef998ff486403ff24f25e55564ca8d917c34"
+    },
+    "errors": {
+      "dtype": "float32",
+      "length": 66049,
+      "sha256": "9d4e66925f7da4ebb5c362f2aa70ce18597c90013bf30a958996335cee999974"
+    },
+    "meshes": {
+      "1": {
+        "vertices": {
+          "dtype": "uint16",
+          "length": 118904,
+          "sha256": "80b40e8fd349f853b0fdb1149636994cb8a602628cc68cbef09208a18994ca32"
+        },
+        "triangles": {
+          "dtype": "uint32",
+          "length": 354048,
+          "sha256": "c3bbaf540d28d82225d87cc0b20374be0b755aeafb2c6bd652449ca2dea8bb49"
+        }
+      },
+      "5": {
+        "vertices": {
+          "dtype": "uint16",
+          "length": 93124,
+          "sha256": "46562ee38e66b44f22084128b6d04d376e9821b3b230daf631b0561dc2618e07"
+        },
+        "triangles": {
+          "dtype": "uint32",
+          "length": 277266,
+          "sha256": "75c28316bc051566fe7a70c88bb393d1d5f40bed3dbe71a69501db56567321cc"
+        }
+      },
+      "20": {
+        "vertices": {
+          "dtype": "uint16",
+          "length": 48514,
+          "sha256": "7a55e399da71830d7428061b0f7d1d457011df7db704fad4f9ef44926b5f5cb5"
+        },
+        "triangles": {
+          "dtype": "uint32",
+          "length": 144237,
+          "sha256": "1941f87b57fc17f2a6663e4714e8b8bb246c03c456ea054c31c2b0911c590562"
+        }
+      },
+      "50": {
+        "vertices": {
+          "dtype": "uint16",
+          "length": 18784,
+          "sha256": "cad0bb7aa5ef00e62514a8db57162d3be8ddc0cd4ae816878cbb3b4f0eed8ac6"
+        },
+        "triangles": {
+          "dtype": "uint32",
+          "length": 55617,
+          "sha256": "120a341b5ccaf8c97c1a9349936d24243259feb334239980da4a6af4361b7e68"
+        }
+      },
+      "100": {
+        "vertices": {
+          "dtype": "uint16",
+          "length": 6558,
+          "sha256": "e27d5a11cb01191d744dbad540d48a5895fd0aa97b4db95f66d87847da38f441"
+        },
+        "triangles": {
+          "dtype": "uint32",
+          "length": 19224,
+          "sha256": "f54829bf44271e587f8207e6617d6d521274b01720291dc9b1c6761a9417c2b5"
+        }
+      },
+      "500": {
+        "vertices": {
+          "dtype": "uint16",
+          "length": 132,
+          "sha256": "7666711849ae19e1ae5823aa82c6f40196828a59abace10ae5e6b2527210e58c"
+        },
+        "triangles": {
+          "dtype": "uint32",
+          "length": 315,
+          "sha256": "92f924d7f42e743b92af3090950047bfdb8037d7556cc9f63e5d4c2a9e55c6f4"
+        }
+      }
+    }
+  }
+}
