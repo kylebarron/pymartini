@@ -17,8 +17,7 @@ This generates files in the `data/` folder to compare against Python output.
 In the root of the repository, run:
 
 ```
-pip install '.[test]'
-pytest
+uv run pytest
 ```
 
 ## Data Sources

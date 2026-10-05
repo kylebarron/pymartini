@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Package metadata moved to `pyproject.toml`. The `test` extra was removed; development dependencies are now a `dev` dependency group managed with `uv`.
+
 ## [0.5.1] - 2025-06-24
 
 - Fixed `__version__` in `__init__.py`.

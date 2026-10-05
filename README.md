@@ -5,7 +5,7 @@ faster than Martini in Node. The only dependency is Numpy.
 
 [![][image_url]][example]
 
-[image_url]: https://raw.githubusercontent.com/kylebarron/pymartini/master/assets/grca_wireframe.jpg
+[image_url]: https://raw.githubusercontent.com/kylebarron/pymartini/main/assets/grca_wireframe.jpg
 [example]: https://kylebarron.dev/quantized-mesh-encoder
 
 A wireframe rendering of the Grand Canyon. The mesh is created using
@@ -270,8 +270,7 @@ mesh is about 2x faster in Python than in Node.
 ```bash
 git clone https://github.com/kylebarron/pymartini
 cd pymartini
-pip install '.[test]'
-python bench.py
+uv run python bench.py
 ```
 
 ```
