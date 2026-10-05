@@ -181,15 +181,16 @@ output is a numpy ndarray of the form `[[x1, y1, z1], [x2, y2, z2], ...]`.
 from imageio import imread
 from pymartini import decode_ele, Martini, rescale_positions
 
-path = './tests/data/terrarium.png'
+path = "./tests/data/terrarium.png"
 png = imread(path)
-terrain = decode_ele(png, 'mapbox')
+terrain = decode_ele(png, "terrarium")
 martini = Martini(png.shape[0] + 1)
 tile = martini.create_tile(terrain)
 vertices, triangles = tile.get_mesh(10)
 
 # Use mercantile to find the bounds in WGS84 of this tile
 import mercantile
+
 bounds = mercantile.bounds(mercantile.Tile(385, 803, 11))
 
 # Rescale positions to WGS84
@@ -197,8 +198,7 @@ rescaled = rescale_positions(
     vertices,
     terrain,
     bounds=bounds,
-    flip_y=True
-    column_row=True
+    flip_y=True,
 )
 ```
 
