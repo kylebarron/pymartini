@@ -26,6 +26,10 @@ def decode_ele(png: np.ndarray, encoding: str, backfill: bool = True) -> np.ndar
     if png.shape[0] <= 4:
         png = png.T
 
+    # Promote to float so integer (e.g. uint8) inputs don't overflow, since
+    # numpy 2 keeps the array's dtype when multiplying by a Python int
+    png = png.astype(np.float64)
+
     # Get bands
     if encoding == 'mapbox':
         red = png[:, :, 0] * (256 * 256)
