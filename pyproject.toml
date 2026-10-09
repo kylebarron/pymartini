@@ -1,5 +1,46 @@
+[project]
+name = "pymartini"
+version = "0.5.1"
+description = "A Python port of Martini for fast terrain mesh generation"
+readme = "README.md"
+authors = [{ name = "Kyle Barron", email = "kylebarron2@gmail.com" }]
+requires-python = ">=3.9"
+license = "MIT"
+license-files = ["LICENSE"]
+classifiers = [
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Cython",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Scientific/Engineering :: GIS",
+    "Typing :: Typed",
+]
+keywords = ["mesh", "heightmap", "elevation", "terrain", "numpy"]
+dependencies = ["numpy"]
+
+[project.urls]
+Homepage = "https://github.com/kylebarron/pymartini"
+Repository = "https://github.com/kylebarron/pymartini"
+Issues = "https://github.com/kylebarron/pymartini/issues"
+Changelog = "https://github.com/kylebarron/pymartini/blob/main/CHANGELOG.md"
+
+[dependency-groups]
+dev = ["imageio>=2.9", "pytest>=8"]
+
 [build-system]
-requires = ["setuptools", "wheel", "cython", "numpy>=2.0"]
+# numpy is needed at build time for its C headers. Building against numpy 2
+# produces an extension that works with both numpy 1.x and 2.x at runtime.
+requires = ["setuptools>=77", "cython", "numpy>=2.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["pymartini", "pymartini.*"]
 
 [tool.cibuildwheel]
 skip = "cp38*"
