@@ -13,20 +13,25 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        # macos-13 is an intel runner, macos-14 is apple silicon
+        # macos-15-intel is an intel runner, macos-14 is apple silicon. Each
+        # builds only its native architecture, so no two jobs produce wheels
+        # with the same filename (which would collide when the upload job
+        # merges the artifacts).
         os:
-          [ubuntu-latest, ubuntu-24.04-arm, windows-latest, macos-13, macos-14]
+          [ubuntu-latest, ubuntu-24.04-arm, windows-latest, macos-15-intel, macos-14]
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v3.0.0
+        uses: pypa/cibuildwheel@v4.2.1
         env:
           # From rio-color here:
           # https://github.com/mapbox/rio-color/blob/0ab59ad8e2db99ad1d0c8bd8c2e4cf8d0c3114cf/appveyor.yml#L3
-          CIBW_SKIP: "cp2* cp35* pp* *-win32 *-manylinux_i686"
-          CIBW_ARCHS_MACOS: x86_64 arm64
+          # Skip free-threaded builds (cp314t), which cibuildwheel builds by
+          # default: the extension doesn't declare that it's safe without
+          # the GIL
+          CIBW_SKIP: "cp2* cp35* pp* *-win32 *-manylinux_i686 cp3??t-*"
 
       - uses: actions/upload-artifact@v4
         with:
