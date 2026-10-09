@@ -13,7 +13,10 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        # macos-15-intel is an intel runner, macos-14 is apple silicon
+        # macos-15-intel is an intel runner, macos-14 is apple silicon. Each
+        # builds only its native architecture, so no two jobs produce wheels
+        # with the same filename (which would collide when the upload job
+        # merges the artifacts).
         os:
           [ubuntu-latest, ubuntu-24.04-arm, windows-latest, macos-15-intel, macos-14]
 
@@ -29,7 +32,6 @@ jobs:
           # default: the extension doesn't declare that it's safe without
           # the GIL
           CIBW_SKIP: "cp2* cp35* pp* *-win32 *-manylinux_i686 cp3??t-*"
-          CIBW_ARCHS_MACOS: x86_64 arm64
 
       - uses: actions/upload-artifact@v4
         with:
