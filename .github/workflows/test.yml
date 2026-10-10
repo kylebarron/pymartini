@@ -1,0 +1,22 @@
+name: Test Python
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  lint-python:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # Use ruff-action so we get annotations in the Github UI
+      - uses: astral-sh/ruff-action@v4.1.0
+
+      - name: Check formatting
+        uses: astral-sh/ruff-action@v4.1.0
+        with:
+          args: "format --check"

@@ -44,3 +44,32 @@ include = ["pymartini", "pymartini.*"]
 
 [tool.cibuildwheel]
 skip = "cp38*"
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "COM812", # trailing comma; conflicts with ruff format
+    "CPY001", # copyright header
+    "D203",   # incompatible with D211
+    "D213",   # incompatible with D212
+    "EM101",  # raw string in exception
+    "EM102",  # f-string in exception
+    "FIX002", # todo statements
+    "TD002",  # todo without author name
+    "TRY003", # define exceptions in the exception class
+]
+
+[tool.ruff.lint.per-file-ignores]
+"test/*" = [
+    "ANN001",  # annotation in function argument
+    "ANN201",  # return type annotation
+    "PLR2004", # Magic value used in comparison
+    "S101",    # assert
+    "SLF001",  # private member access
+    "D",       # docstring
+]
+"bench.py" = [
+    "D",      # docstring
+    "INP001", # implicit namespace package
+    "T201",   # print
+]
