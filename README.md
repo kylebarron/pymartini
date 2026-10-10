@@ -150,7 +150,7 @@ A helper function to decode a PNG terrain tile into elevations.
 from imageio import imread
 from pymartini import decode_ele
 
-path = "./test/data/fuji.png"
+path = "./tests/data/fuji.png"
 fuji = imread(path)
 terrain = decode_ele(fuji, "mapbox")
 ```
@@ -181,7 +181,7 @@ output is a numpy ndarray of the form `[[x1, y1, z1], [x2, y2, z2], ...]`.
 from imageio import imread
 from pymartini import decode_ele, Martini, rescale_positions
 
-path = './test/data/terrarium.png'
+path = './tests/data/terrarium.png'
 png = imread(path)
 terrain = decode_ele(png, 'mapbox')
 martini = Martini(png.shape[0] + 1)
