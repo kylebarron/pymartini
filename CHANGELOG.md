@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Fix `Martini.create_tile` computing triangle errors in single precision. Errors are now computed in double precision like Martini, so meshes match Martini's output exactly. Some meshes with a low max error gain a few vertices. See #6.
 - Fix `decode_ele` raising `OverflowError` for `uint8` input (e.g. from reading a PNG) with numpy 2.
 - Package metadata moved to `pyproject.toml`. The `test` extra was removed; development dependencies are now a `dev` dependency group managed with `uv`.
 
