@@ -44,6 +44,14 @@ include = ["pymartini", "pymartini.*"]
 
 [tool.cibuildwheel]
 skip = "cp38*"
+test-groups = ["dev"]
+test-command = "pytest {project}/tests"
+
+[tool.pytest.ini_options]
+# Import the installed package rather than adding the repository root to
+# sys.path. This matters when cibuildwheel tests a built wheel: the source
+# checkout's `pymartini/` has no compiled extension.
+addopts = ["--import-mode=importlib"]
 
 [tool.ruff.lint]
 select = ["ALL"]
@@ -60,7 +68,7 @@ ignore = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"test/*" = [
+"tests/*" = [
     "ANN001",  # annotation in function argument
     "ANN201",  # return type annotation
     "PLR2004", # Magic value used in comparison

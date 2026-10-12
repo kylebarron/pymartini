@@ -1,0 +1,22 @@
+{
+  "name": "pymartini-test-data",
+  "private": true,
+  "type": "module",
+  "description": "Generate Martini (JS) reference digests for the pymartini tests",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "generate": "node create_test_data.ts",
+    "typecheck": "tsc"
+  },
+  "dependencies": {
+    "@mapbox/martini": "^0.2.0",
+    "pngjs": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.2",
+    "@types/pngjs": "^6.0.5",
+    "typescript": "^7.0.2"
+  }
+}
