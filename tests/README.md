@@ -17,13 +17,15 @@ decoded terrain, the `Martini` constructor's arrays, the error map from
 
 Rather than storing Martini's output arrays (about 23MB), `data/martini_js.json`
 stores the dtype, length and SHA-256 digest of each one. To regenerate it, you
-need Node/NPM set up, then run:
+need Node 22.18 or later (which runs TypeScript directly), then run:
 
 ```bash
 cd tests/martini_js
 npm install
-node create_test_data.js
+npm run generate
 ```
+
+`npm run typecheck` type-checks the script.
 
 ## Data Sources
 
