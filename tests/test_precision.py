@@ -31,4 +31,4 @@ def test_mesh_refines_on_sub_float32_error():
     # The center error of 0.5 exceeds max_error, so each of the two top-level
     # triangles is split in two
     _, triangles = tile.get_mesh(0.25)
-    assert len(triangles) == 4 * 3
+    assert triangles.shape == (4, 3)

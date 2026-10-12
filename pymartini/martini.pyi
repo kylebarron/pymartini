@@ -109,12 +109,13 @@ class Tile:
                 within 5 meters.
 
         Returns:
-            A tuple of `(vertices, triangles)`, each a flat array.
-                `vertices` holds the interleaved 2D coordinates of each vertex,
-                e.g. `[x0, y0, x1, y1, ...]`. To get 3D coordinates, use
+            A tuple of `(vertices, triangles)`.
+                `vertices` has shape `(num_vertices, 2)` and holds the 2D
+                coordinates of each vertex, e.g. `[[x0, y0], [x1, y1], ...]`.
+                To get 3D coordinates, use
                 [`rescale_positions`][pymartini.rescale_positions].
-                `triangles` holds indices of vertices, three per triangle. So
-                `[0, 1, 3, ...]` uses the first, second, and fourth vertices
-                as a single triangle.
+                `triangles` has shape `(num_triangles, 3)` and holds indices
+                into `vertices`. So a row `[0, 1, 3]` uses the first, second,
+                and fourth vertices as a single triangle.
 
         """

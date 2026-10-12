@@ -112,6 +112,5 @@ def test_rescale_positions_2d_vertices():
 def test_rescale_positions_mesh_heights(fuji):
     vertices, _ = Martini(fuji.shape[0]).create_tile(fuji).get_mesh(30)
     out = rescale_positions(vertices, fuji)
-    assert out.shape == (len(vertices) // 2, 3)
-    xy = vertices.reshape(-1, 2)
-    np.testing.assert_array_equal(out[:, 2], fuji[xy[:, 1], xy[:, 0]])
+    assert out.shape == (len(vertices), 3)
+    np.testing.assert_array_equal(out[:, 2], fuji[vertices[:, 1], vertices[:, 0]])
