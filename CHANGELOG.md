@@ -3,6 +3,8 @@
 ## Unreleased
 
 - **Breaking:** `Tile.get_mesh` now returns `vertices` with shape `(num_vertices, 2)` and `triangles` with shape `(num_triangles, 3)`, instead of flat arrays. This lets the output be passed directly to mesh libraries like `trimesh` and `meshio`. `rescale_positions` and `quantized-mesh-encoder` accept both shapes. To get the old flat arrays, call `.ravel()` on each. See #18.
+- **Breaking:** Drop support for Python 3.9 and 3.10, which have reached end of life. The minimum Python version is now 3.11.
+- Python 3.15 wheels.
 - New documentation website built with mkdocs and mkdocstrings.
 - Fix `Martini.create_tile` computing triangle errors in single precision. Errors are now computed in double precision like Martini, so meshes match Martini's output exactly. Some meshes with a low max error gain a few vertices. See #6.
 - Fix `decode_ele` raising `OverflowError` for `uint8` input (e.g. from reading a PNG) with numpy 2.
