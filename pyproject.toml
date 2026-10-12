@@ -32,6 +32,21 @@ Changelog = "https://github.com/kylebarron/pymartini/blob/main/CHANGELOG.md"
 
 [dependency-groups]
 dev = ["imageio>=2.9", "pytest>=8"]
+docs = [
+    # Workaround for https://github.com/mkdocs/mkdocs/issues/4032
+    "click<8.3",
+    "mkdocs-material[imaging]>=9.5.49",
+    "mkdocs>=1.6.1,<2",
+    "mkdocstrings[python]>=1.0",
+    "mike>=2.1.3",
+    # We use ruff format ourselves, but mkdocstrings requires black to be
+    # installed to format signatures in the docs
+    "black>=24",
+]
+
+# The docs toolchain needs a newer Python than the package itself supports
+[tool.uv.dependency-groups]
+docs = { requires-python = ">=3.10" }
 
 [build-system]
 # numpy is needed at build time for its C headers. Building against numpy 2
@@ -75,6 +90,9 @@ ignore = [
     "S101",    # assert
     "SLF001",  # private member access
     "D",       # docstring
+]
+"*.pyi" = [
+    "PYI021", # docstrings in stubs; mkdocstrings renders the Cython API from them
 ]
 "bench.py" = [
     "D",      # docstring
