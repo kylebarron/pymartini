@@ -198,8 +198,8 @@ cdef class Tile:
         self.processTriangle(0, 0, _max, _max, _max, 0)
         self.processTriangle(_max, _max, 0, 0, 0, _max)
 
-        vertices = np.asarray(self.vertices_view, dtype=np.uint16)
-        triangles = np.asarray(self.triangles_view, dtype=np.uint32)
+        vertices = np.asarray(self.vertices_view, dtype=np.uint16).reshape(-1, 2)
+        triangles = np.asarray(self.triangles_view, dtype=np.uint32).reshape(-1, 3)
 
         return vertices, triangles
 

@@ -8,23 +8,23 @@ def test_fuji_mesh(fuji):
     # Matches the benchmark output documented in the README, and Martini's
     martini = Martini(fuji.shape[0])
     vertices, triangles = martini.create_tile(fuji).get_mesh(30)
-    assert len(vertices) / 2 == 9704
-    assert len(triangles) / 3 == 19086
+    assert vertices.shape == (9704, 2)
+    assert triangles.shape == (19086, 3)
 
 
 def test_output_types(fuji):
     vertices, triangles = Martini(fuji.shape[0]).create_tile(fuji).get_mesh(30)
     assert vertices.dtype == np.uint16
     assert triangles.dtype == np.uint32
-    assert vertices.ndim == 1
-    assert triangles.ndim == 1
-    assert len(vertices) % 2 == 0
-    assert len(triangles) % 3 == 0
+    assert vertices.ndim == 2
+    assert triangles.ndim == 2
+    assert vertices.shape[1] == 2
+    assert triangles.shape[1] == 3
 
 
 def test_triangles_index_vertices(fuji):
     vertices, triangles = Martini(fuji.shape[0]).create_tile(fuji).get_mesh(30)
-    num_vertices = len(vertices) // 2
+    num_vertices = len(vertices)
     assert triangles.max() == num_vertices - 1
     # Every vertex is used by some triangle
     assert len(np.unique(triangles)) == num_vertices
@@ -74,9 +74,9 @@ def test_flat_terrain():
     # A flat surface is approximated exactly by the two top-level triangles
     terrain = np.zeros((257, 257), dtype=np.float32)
     vertices, triangles = Martini(257).create_tile(terrain).get_mesh(0)
-    assert len(vertices) / 2 == 4
-    assert len(triangles) / 3 == 2
-    corners = {tuple(v) for v in vertices.reshape(-1, 2)}
+    assert vertices.shape == (4, 2)
+    assert triangles.shape == (2, 3)
+    corners = {tuple(v) for v in vertices}
     assert corners == {(0, 0), (0, 256), (256, 0), (256, 256)}
 
 
