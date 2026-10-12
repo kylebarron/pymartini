@@ -113,13 +113,17 @@ Get a mesh for a given max error.
 
 Returns a tuple of (`vertices`, `triangles`).
 
-Each is a flat numpy array. Vertices represents the interleaved **2D**
-coordinates of each vertex, e.g. `[x0, y0, x1, y1, ...]`. If you need 3D
+`vertices` is an array of shape `(num_vertices, 2)` holding the **2D** pixel
+coordinates of each vertex, e.g. `[[x0, y0], [x1, y1], ...]`. If you need 3D
 coordinates, you can use the `rescale_positions` helper function described
 below.
 
-`triangles` represents _indices_ within the `vertices` array. So `[0, 1, 3, ...]` would use the first, second, and fourth vertices within the `vertices`
-array as a single triangle.
+`triangles` is an array of shape `(num_triangles, 3)` holding _indices_ into
+`vertices`. So a row `[0, 1, 3]` would use the first, second, and fourth
+vertices as a single triangle.
+
+To pass the mesh to other mesh libraries like `trimesh` or `meshio`, use the
+output of `rescale_positions` as the vertices and `triangles` as the faces.
 
 #### `decode_ele`
 
@@ -270,7 +274,7 @@ uv run python bench.py
 init tileset: 14.860ms
 create tile: 5.862ms
 mesh (max_error=30): 1.010ms
-vertices: 9704.0, triangles: 19086.0
+vertices: 9704, triangles: 19086
 mesh 0: 18.350ms
 mesh 1: 17.581ms
 mesh 2: 15.245ms

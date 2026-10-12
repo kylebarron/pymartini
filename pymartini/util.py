@@ -98,7 +98,8 @@ def rescale_positions(
     """Rescale positions and add height as third dimension.
 
     Args:
-        vertices: Vertices output from Martini.
+        vertices: Vertices output from `Tile.get_mesh`, of shape (-1, 2).
+            Flat, interleaved `[x0, y0, x1, y1, ...]` arrays are also accepted.
         terrain: 2D array of elevations as output by `decode_ele`. This must
             be the same array that was passed to `Martini.create_tile`.
         bounds: Linearly rescale position values to this extent, expected to

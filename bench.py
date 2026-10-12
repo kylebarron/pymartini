@@ -22,7 +22,7 @@ start = time()
 vertices, triangles = tile.get_mesh(30)
 end = time()
 print(f"mesh (max_error=30): {(end - start) * 1000:.3f}ms")
-print(f"vertices: {len(vertices) / 2}, triangles: {len(triangles) / 3}")
+print(f"vertices: {len(vertices)}, triangles: {len(triangles)}")
 
 all_meshes_start = time()
 for i in range(21):
