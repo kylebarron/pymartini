@@ -1,6 +1,6 @@
 [project]
 name = "pymartini"
-version = "0.5.1"
+version = "0.6.0"
 description = "A Python port of Martini for fast terrain mesh generation"
 readme = "README.md"
 authors = [{ name = "Kyle Barron", email = "kylebarron2@gmail.com" }]
