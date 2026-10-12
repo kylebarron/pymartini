@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## [0.6.0] - 2026-10-12
 
 - **Breaking:** `Tile.get_mesh` now returns `vertices` with shape `(num_vertices, 2)` and `triangles` with shape `(num_triangles, 3)`, instead of flat arrays. This lets the output be passed directly to mesh libraries like `trimesh` and `meshio`. `rescale_positions` and `quantized-mesh-encoder` accept both shapes. To get the old flat arrays, call `.ravel()` on each. See #18.
 - **Breaking:** Drop support for Python 3.9 and 3.10, which have reached end of life. The minimum Python version is now 3.11.
