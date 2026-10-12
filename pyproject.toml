@@ -4,7 +4,7 @@ version = "0.5.1"
 description = "A Python port of Martini for fast terrain mesh generation"
 readme = "README.md"
 authors = [{ name = "Kyle Barron", email = "kylebarron2@gmail.com" }]
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 license = "MIT"
 license-files = ["LICENSE"]
 classifiers = [
@@ -12,12 +12,11 @@ classifiers = [
     "Intended Audience :: Science/Research",
     "Programming Language :: Cython",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
     "Topic :: Scientific/Engineering :: GIS",
     "Typing :: Typed",
 ]
@@ -44,10 +43,6 @@ docs = [
     "black>=24",
 ]
 
-# The docs toolchain needs a newer Python than the package itself supports
-[tool.uv.dependency-groups]
-docs = { requires-python = ">=3.10" }
-
 [build-system]
 # numpy is needed at build time for its C headers. Building against numpy 2
 # produces an extension that works with both numpy 1.x and 2.x at runtime.
@@ -58,7 +53,6 @@ build-backend = "setuptools.build_meta"
 include = ["pymartini", "pymartini.*"]
 
 [tool.cibuildwheel]
-skip = "cp38*"
 test-groups = ["dev"]
 test-command = "pytest {project}/tests"
 
