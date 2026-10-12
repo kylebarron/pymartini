@@ -1,0 +1,1593 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Fast terrain mesh generation in Python.">
+      
+      
+        <meta name="author" content="Kyle Barron">
+      
+      
+        <link rel="canonical" href="https://kylebarron.dev/pymartini/latest/">
+      
+      
+      
+        <link rel="next" href="api/martini/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>pymartini</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+<meta property="og:type" content="website" />
+<meta property="og:title" content="pymartini" />
+<meta property="og:description" content="Fast terrain mesh generation in Python." />
+<meta property="og:image" content="https://kylebarron.dev/pymartini/latest/assets/images/social/index.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://kylebarron.dev/pymartini/latest/" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content="pymartini" />
+<meta property="twitter:description" content="Fast terrain mesh generation in Python." />
+<meta property="twitter:image" content="https://kylebarron.dev/pymartini/latest/assets/images/social/index.png" />
+</head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#pymartini" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+          <aside class="md-banner md-banner--warning">
+            <div class="md-banner__inner md-grid md-typeset">
+              
+  You're not viewing the latest version.
+  <a href="../.">
+    <strong>Click here to go to latest.</strong>
+  </a>
+
+            </div>
+            <script>var el=document.querySelector("[data-md-component=outdated]"),base=new URL("."),outdated=__md_get("__outdated",sessionStorage,base);!0===outdated&&el&&(el.hidden=!1)</script>
+          </aside>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="pymartini" class="md-header__button md-logo" aria-label="pymartini" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            pymartini
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              pymartini
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="default" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="default" data-md-color-accent="deep-orange"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/kylebarron/pymartini" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    kylebarron/pymartini
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="pymartini" class="md-nav__button md-logo" aria-label="pymartini" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    pymartini
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/kylebarron/pymartini" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    kylebarron/pymartini
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    pymartini
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="." class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    pymartini
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#martini" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Martini
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Martini">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arguments
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#martinicreate_tile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Martini.create_tile
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Martini.create_tile">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arguments
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returns_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tileget_mesh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tile.get_mesh
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tile.get_mesh">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arguments
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returns_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#decode_ele" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        decode_ele
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="decode_ele">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arguments
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returns_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rescale_positions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        rescale_positions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="rescale_positions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arguments
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#martini-or-delatin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Martini or Delatin?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#correctness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Correctness
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#type-checking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Type Checking
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#benchmark" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Benchmark
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Benchmark">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#js-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JS (Node)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        License
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/martini/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Martini
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/util/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utilities
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="CHANGELOG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#martini" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Martini
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Martini">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arguments
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#martinicreate_tile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Martini.create_tile
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Martini.create_tile">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arguments
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returns_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tileget_mesh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tile.get_mesh
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tile.get_mesh">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arguments
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returns_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#decode_ele" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        decode_ele
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="decode_ele">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arguments
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returns_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rescale_positions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        rescale_positions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="rescale_positions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arguments
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#martini-or-delatin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Martini or Delatin?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#correctness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Correctness
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#type-checking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Type Checking
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#benchmark" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Benchmark
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Benchmark">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#js-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JS (Node)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        License
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="pymartini">pymartini<a class="headerlink" href="#pymartini" title="Permanent link">&para;</a></h1>
+<p>A Cython port of <a href="https://github.com/mapbox/martini">Martini</a> for fast RTIN terrain mesh generation, 2-3x
+faster than Martini in Node. The only dependency is Numpy.</p>
+<p><a href="https://kylebarron.dev/quantized-mesh-encoder"><img alt="" src="https://raw.githubusercontent.com/kylebarron/pymartini/main/assets/grca_wireframe.jpg" /></a></p>
+<p>A wireframe rendering of the Grand Canyon. The mesh is created using
+<code>pymartini</code>, encoded using <a href="https://github.com/kylebarron/quantized-mesh-encoder"><code>quantized-mesh-encoder</code></a>,
+served on-demand using <a href="https://github.com/kylebarron/dem-tiler"><code>dem-tiler</code></a>, and rendered with
+<a href="https://deck.gl">deck.gl</a>.</p>
+<h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h2>
+<p>With pip:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip install pymartini
+</code></pre></div>
+<p>or with Conda:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>conda install -c conda-forge pymartini
+</code></pre></div>
+<h2 id="using">Using<a class="headerlink" href="#using" title="Permanent link">&para;</a></h2>
+<h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h3>
+<p>The API is modeled after Martini.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pymartini</span><span class="w"> </span><span class="kn">import</span> <span class="n">Martini</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1"># set up mesh generator for a certain 2^k+1 grid size</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Usually either 257 or 513</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">martini</span> <span class="o">=</span> <span class="n">Martini</span><span class="p">(</span><span class="mi">257</span><span class="p">)</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1"># generate RTIN hierarchy from terrain data (an array of size^2 length)</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="n">tile</span> <span class="o">=</span> <span class="n">martini</span><span class="o">.</span><span class="n">create_tile</span><span class="p">(</span><span class="n">terrain</span><span class="p">)</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="c1"># get a mesh (vertices and triangles indices) for a 10m error</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="n">vertices</span><span class="p">,</span> <span class="n">triangles</span> <span class="o">=</span> <span class="n">tile</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="api">API<a class="headerlink" href="#api" title="Permanent link">&para;</a></h3>
+<p>The <code>Martini</code> class and <code>create_tile</code> and <code>get_mesh</code> methods are a direct port
+from the JS Martini library.</p>
+<p>Additionally I include two helper functions: <code>decode_ele</code> to decode a Mapbox
+Terrain RGB or Terrarium PNG array to elevations; and <code>rescale_positions</code>, which
+adds elevations to each vertex and optionally linearly rescales each vertex's XY
+coordinates to a new bounding box.</p>
+<h4 id="martini"><code>Martini</code><a class="headerlink" href="#martini" title="Permanent link">&para;</a></h4>
+<p>A class to instantiate constants needed for the <code>create_tile</code> and <code>get_mesh</code>
+steps. As noted in the benchmarks below, instantiating the <code>Martini</code> class is
+the slowest of the three functions. If you're planning to create many meshes of
+the same size, create one <code>Martini</code> class and create many tiles from it.</p>
+<h5 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h5>
+<ul>
+<li><code>grid_size</code> (<code>int</code>, default <code>257</code>): the grid size to use when generating the
+  mesh. Must be 2^k+1. If your source heightmap is 256x256 pixels, use
+  <code>grid_size=257</code> and backfill the border pixels.</li>
+</ul>
+<h5 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h5>
+<p>Returns a <code>Martini</code> instance on which you can call <code>create_tile</code>.</p>
+<h4 id="martinicreate_tile"><code>Martini.create_tile</code><a class="headerlink" href="#martinicreate_tile" title="Permanent link">&para;</a></h4>
+<p>Generate RTIN hierarchy from terrain data. This is faster than creating the
+<code>Martini</code> instance, but slower than creating a mesh for a given max error. If
+you need to create many meshes with different errors for the same tile, you
+should reuse a <code>Tile</code> instance.</p>
+<h5 id="arguments_1">Arguments<a class="headerlink" href="#arguments_1" title="Permanent link">&para;</a></h5>
+<ul>
+<li><code>terrain</code> (numpy <code>ndarray</code>): an array of dtype <code>float32</code> representing the
+  input heightmap. The array can either be flattened, of shape (2^k+1 * 2^k+1)
+  or a two-dimensional array of shape (2^k+1, 2^k+1). Note that for a 2D array
+  pymartini expects indices in (columns, rows) order, so you might need to
+  transpose your array first. Currently an error will be produced if the dtype
+  of your input array is not <code>np.float32</code>.</li>
+</ul>
+<h5 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h5>
+<p>Returns a <code>Tile</code> instance on which you can call <code>get_mesh</code>.</p>
+<h4 id="tileget_mesh"><code>Tile.get_mesh</code><a class="headerlink" href="#tileget_mesh" title="Permanent link">&para;</a></h4>
+<p>Get a mesh for a given max error.</p>
+<h5 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">&para;</a></h5>
+<ul>
+<li><code>max_error</code> (<code>float</code>, default <code>0</code>): the maximum vertical error for each
+  triangle in the output mesh. For example if the units of the input heightmap
+  is meters, using <code>max_error=5</code> would mean that the mesh is continually refined
+  until every triangle approximates the surface of the heightmap within 5
+  meters.</li>
+</ul>
+<h5 id="returns_2">Returns<a class="headerlink" href="#returns_2" title="Permanent link">&para;</a></h5>
+<p>Returns a tuple of (<code>vertices</code>, <code>triangles</code>).</p>
+<p><code>vertices</code> is an array of shape <code>(num_vertices, 2)</code> holding the <strong>2D</strong> pixel
+coordinates of each vertex, e.g. <code>[[x0, y0], [x1, y1], ...]</code>. If you need 3D
+coordinates, you can use the <code>rescale_positions</code> helper function described
+below.</p>
+<p><code>triangles</code> is an array of shape <code>(num_triangles, 3)</code> holding <em>indices</em> into
+<code>vertices</code>. So a row <code>[0, 1, 3]</code> would use the first, second, and fourth
+vertices as a single triangle.</p>
+<p>To pass the mesh to other mesh libraries like <code>trimesh</code> or <code>meshio</code>, use the
+output of <code>rescale_positions</code> as the vertices and <code>triangles</code> as the faces.</p>
+<h4 id="decode_ele"><code>decode_ele</code><a class="headerlink" href="#decode_ele" title="Permanent link">&para;</a></h4>
+<p>A helper function to decode a PNG terrain tile into elevations.</p>
+<h5 id="arguments_3">Arguments<a class="headerlink" href="#arguments_3" title="Permanent link">&para;</a></h5>
+<ul>
+<li><code>png</code> (<code>np.ndarray</code>): Ndarray of elevations encoded in three channels,
+  representing red, green, and blue. Must be of shape (<code>tile_size</code>, <code>tile_size</code>,
+  <code>&gt;=3</code>) or (<code>&gt;=3</code>, <code>tile_size</code>, <code>tile_size</code>), where <code>tile_size</code> is usually 256
+  or 512</li>
+<li><code>encoding</code> (<code>str</code>): Either 'mapbox' or 'terrarium', the two main RGB
+  encodings for elevation values</li>
+<li><code>backfill</code> (<code>bool</code>, default <code>True</code>): Whether to create an array of size
+  (<code>tile_size + 1</code>, <code>tile_size + 1</code>), backfilling the bottom and right edges. This is used
+  because Martini needs a grid of size <code>2^n + 1</code></li>
+</ul>
+<h5 id="returns_3">Returns<a class="headerlink" href="#returns_3" title="Permanent link">&para;</a></h5>
+<ul>
+<li>(<code>np.ndarray</code>) Array with decoded elevation values. If <code>backfill</code> is <code>True</code>,
+  returned shape is (<code>tile_size + 1</code>, <code>tile_size + 1</code>), otherwise returned shape
+  is (<code>tile_size</code>, <code>tile_size</code>), where <code>tile_size</code> is the shape of the input
+  array.</li>
+</ul>
+<h5 id="example_1">Example<a class="headerlink" href="#example_1" title="Permanent link">&para;</a></h5>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">imageio</span><span class="w"> </span><span class="kn">import</span> <span class="n">imread</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pymartini</span><span class="w"> </span><span class="kn">import</span> <span class="n">decode_ele</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">path</span> <span class="o">=</span> <span class="s2">"./tests/data/fuji.png"</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">fuji</span> <span class="o">=</span> <span class="n">imread</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="n">terrain</span> <span class="o">=</span> <span class="n">decode_ele</span><span class="p">(</span><span class="n">fuji</span><span class="p">,</span> <span class="s2">"mapbox"</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="rescale_positions"><code>rescale_positions</code><a class="headerlink" href="#rescale_positions" title="Permanent link">&para;</a></h4>
+<p>A helper function to rescale the <code>vertices</code> output and add elevations. The
+output is a numpy ndarray of the form <code>[[x1, y1, z1], [x2, y2, z2], ...]</code>.</p>
+<h5 id="arguments_4">Arguments<a class="headerlink" href="#arguments_4" title="Permanent link">&para;</a></h5>
+<ul>
+<li><code>vertices</code>: (<code>np.array</code>) vertices output from Martini</li>
+<li><code>terrain</code>: (<code>np.ndarray</code>) 2d heightmap array of elevations as output by
+  <code>decode_ele</code>. Expected to have shape (<code>grid_size</code>, <code>grid_size</code>). <strong><code>terrain</code>
+  is expected to be the exact same array passed to <code>Martini.create_tile</code>.</strong> If
+  you use a different or transposed array, the mesh will look weird. See
+  <a href="https://github.com/kylebarron/pymartini/issues/15">#15</a>. If you need to
+  transpose your array, do it before passing to <code>Martini.create_tile</code>.</li>
+<li><code>bounds</code>: (<code>List[float]</code>, default <code>None</code>) linearly rescale position values to
+  this extent, expected to be [minx, miny, maxx, maxy]. If not provided, no
+  rescaling is done</li>
+<li><code>flip_y</code>: (<code>bool</code>, default <code>False</code>) Flip y coordinates. Can be useful when
+  original data source is a PNG, since the origin of a PNG is the top left.</li>
+</ul>
+<h5 id="example_2">Example<a class="headerlink" href="#example_2" title="Permanent link">&para;</a></h5>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">imageio</span><span class="w"> </span><span class="kn">import</span> <span class="n">imread</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pymartini</span><span class="w"> </span><span class="kn">import</span> <span class="n">decode_ele</span><span class="p">,</span> <span class="n">Martini</span><span class="p">,</span> <span class="n">rescale_positions</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">path</span> <span class="o">=</span> <span class="s2">"./tests/data/terrarium.png"</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">png</span> <span class="o">=</span> <span class="n">imread</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="n">terrain</span> <span class="o">=</span> <span class="n">decode_ele</span><span class="p">(</span><span class="n">png</span><span class="p">,</span> <span class="s2">"terrarium"</span><span class="p">)</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="n">martini</span> <span class="o">=</span> <span class="n">Martini</span><span class="p">(</span><span class="n">png</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="n">tile</span> <span class="o">=</span> <span class="n">martini</span><span class="o">.</span><span class="n">create_tile</span><span class="p">(</span><span class="n">terrain</span><span class="p">)</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="n">vertices</span><span class="p">,</span> <span class="n">triangles</span> <span class="o">=</span> <span class="n">tile</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="c1"># Use mercantile to find the bounds in WGS84 of this tile</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="kn">import</span><span class="w"> </span><span class="nn">mercantile</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="n">bounds</span> <span class="o">=</span> <span class="n">mercantile</span><span class="o">.</span><span class="n">bounds</span><span class="p">(</span><span class="n">mercantile</span><span class="o">.</span><span class="n">Tile</span><span class="p">(</span><span class="mi">385</span><span class="p">,</span> <span class="mi">803</span><span class="p">,</span> <span class="mi">11</span><span class="p">))</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="c1"># Rescale positions to WGS84</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="n">rescaled</span> <span class="o">=</span> <span class="n">rescale_positions</span><span class="p">(</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>    <span class="n">vertices</span><span class="p">,</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>    <span class="n">terrain</span><span class="p">,</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>    <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>    <span class="n">flip_y</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="p">)</span>
+</code></pre></div>
+<h2 id="martini-or-delatin"><code>Martini</code> or <code>Delatin</code>?<a class="headerlink" href="#martini-or-delatin" title="Permanent link">&para;</a></h2>
+<p>Two popular algorithms for terrain mesh generation are the <strong>"Martini"</strong>
+algorithm, found in the JavaScript <a href="https://github.com/mapbox/martini"><code>martini</code></a> library and this Python
+<code>pymartini</code> library, and the <strong>"Delatin"</strong> algorithm, found in the
+C++ <a href="https://github.com/fogleman/hmm"><code>hmm</code></a> library, the Python <a href="https://github.com/kylebarron/pydelatin"><code>pydelatin</code></a> library, and the JavaScript
+<a href="https://github.com/mapbox/delatin"><code>delatin</code></a> library.</p>
+<p>Which to use?</p>
+<p>For most purposes, use <code>pydelatin</code> over <code>pymartini</code>. A good breakdown from <a href="https://github.com/mapbox/martini/issues/15#issuecomment-700475731">a
+Martini issue</a>:</p>
+<blockquote>
+<p>Martini:</p>
+<ul>
+<li>Only works on square 2^n+1 x 2^n+1 grids.</li>
+<li>Generates a hierarchy of meshes (pick arbitrary detail after a single run)</li>
+<li>Optimized for meshing speed rather than quality.</li>
+</ul>
+<p>Delatin:</p>
+<ul>
+<li>Works on arbitrary raster grids.</li>
+<li>Generates a single mesh for a particular detail.</li>
+<li>Optimized for quality (as few triangles as possible for a given error).</li>
+</ul>
+</blockquote>
+<h2 id="correctness">Correctness<a class="headerlink" href="#correctness" title="Permanent link">&para;</a></h2>
+<p><code>pymartini</code> passes the (only) test case included in the original Martini JS
+library. I also wrote extra conformance tests that compare the output of
+<code>pymartini</code> and Martini on three tiles: the decoded terrain, the error map
+computed by <code>martini.create_tile(terrain)</code>, and the meshes for max errors from 1
+to 500. All of them match Martini's output exactly.</p>
+<p>Versions up to 0.5.1 computed triangle errors in single (<code>float32</code>) precision,
+while Martini computes them in double precision. This made the error map differ
+slightly from Martini's, and some meshes with a low max error had a few fewer
+vertices than Martini's. See
+<a href="https://github.com/kylebarron/pymartini/issues/6">#6</a>.</p>
+<h2 id="type-checking">Type Checking<a class="headerlink" href="#type-checking" title="Permanent link">&para;</a></h2>
+<p>As of <code>pymartini</code> 0.4.0, types are provided, which can be used with a checker
+like <a href="https://mypy.readthedocs.io/"><code>mypy</code></a>. If you wish to get the full
+benefit, make sure to <a href="https://numpy.org/devdocs/reference/typing.html#examples">enable Numpy's mypy
+plugin</a>.</p>
+<h2 id="benchmark">Benchmark<a class="headerlink" href="#benchmark" title="Permanent link">&para;</a></h2>
+<p>Preparation steps are about 3x faster in Python than in Node; generating the
+mesh is about 2x faster in Python than in Node.</p>
+<h3 id="python">Python<a class="headerlink" href="#python" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/kylebarron/pymartini
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nb">cd</span><span class="w"> </span>pymartini
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>bench.py
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>init tileset: 14.860ms
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>create tile: 5.862ms
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>mesh (max_error=30): 1.010ms
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>vertices: 9704, triangles: 19086
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>mesh 0: 18.350ms
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>mesh 1: 17.581ms
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>mesh 2: 15.245ms
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>mesh 3: 13.853ms
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>mesh 4: 11.284ms
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>mesh 5: 12.360ms
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>mesh 6: 8.293ms
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>mesh 7: 8.342ms
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>mesh 8: 7.166ms
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>mesh 9: 5.678ms
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>mesh 10: 5.886ms
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>mesh 11: 5.092ms
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>mesh 12: 3.732ms
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>mesh 13: 3.420ms
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>mesh 14: 3.524ms
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>mesh 15: 3.101ms
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>mesh 16: 2.892ms
+<a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>mesh 17: 2.358ms
+<a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a>mesh 18: 2.250ms
+<a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a>mesh 19: 2.293ms
+<a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a>mesh 20: 2.281ms
+<a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a>20 meshes total: 155.559ms
+</code></pre></div>
+<h3 id="js-node">JS (Node)<a class="headerlink" href="#js-node" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/mapbox/martini
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nb">cd</span><span class="w"> </span>martini
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>npm<span class="w"> </span>install
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>node<span class="w"> </span>-r<span class="w"> </span>esm<span class="w"> </span>bench.js
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>init tileset: 54.293ms
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>create tile: 17.307ms
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>mesh: 6.230ms
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>vertices: 9704, triangles: 19086
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>mesh 0: 43.181ms
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>mesh 1: 33.102ms
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>mesh 2: 30.735ms
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>mesh 3: 25.935ms
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>mesh 4: 20.643ms
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>mesh 5: 17.511ms
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>mesh 6: 15.066ms
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>mesh 7: 13.334ms
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>mesh 8: 11.180ms
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>mesh 9: 9.651ms
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>mesh 10: 9.240ms
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>mesh 11: 10.996ms
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>mesh 12: 7.520ms
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>mesh 13: 6.617ms
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>mesh 14: 5.860ms
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a>mesh 15: 5.693ms
+<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a>mesh 16: 4.907ms
+<a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a>mesh 17: 4.469ms
+<a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a>mesh 18: 4.267ms
+<a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a>mesh 19: 4.267ms
+<a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a>mesh 20: 3.619ms
+<a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a>20 meshes total: 290.256ms
+</code></pre></div>
+<h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
+<p>This library is ported from Mapbox's <a href="https://github.com/mapbox/martini">Martini</a>, which is licensed under
+the ISC License. My additions are licensed under the MIT license.</p>
+<p>ISC License</p>
+<p>Copyright (c) 2019, Mapbox</p>
+<p>Permission to use, copy, modify, and/or distribute this software for any purpose
+with or without fee is hereby granted, provided that the above copyright notice
+and this permission notice appear in all copies.</p>
+<p>THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
+FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
+OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
+TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
+THIS SOFTWARE.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["content.code.annotate", "content.code.copy", "navigation.indexes", "navigation.instant", "navigation.tracking", "search.suggest", "search.share"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"alias": true, "provider": "mike"}}</script>
+    
+    
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
